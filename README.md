@@ -8,19 +8,17 @@ Check it out [online][GitHub Pages].
 
 ## What is this?
 
-This is an interactive family tree for my fraternity. This shows family lineage
-while also allowing users to interact to better navigate and understand the
-history:
-
- * Change color coding to organize the tree by family, pledge class, or members'
-   active status
- * Use the search function to quickly find particular fraternity members in the
-   tree
- * Play around with graph nodes (they bounce around and collide with each other
-   using a physics engine!)
+This is an interactive family tree for the Omicron Epsilon Chapter of Phi Mu Alpha Sinfonia at Western Carolina University. 
+This project was forked from Nate Fischer's Wonderful[Framily Tree project.](https://github.com/nfischer/framily-tree)
 
 This family tree is entirely data-driven and easy to update. Data is pulled from
 a [google spreadsheet].
+
+## Why?
+
+Previous Iterations of Omicron Epsilon's family tree were very clunky, ugly, and difficuly to maintain or update.
+As the Historian, I wanted to take better care of the family tree and make it more appealing to index and learn from.
+This is also a long term solution, as the [google spreadsheet] is contained within the chapter's Google account.
 
 ## How does it work?
 
@@ -31,25 +29,14 @@ Check out the [design overview](https://github.com/nfischer/framily-tree/wiki/De
 Updating the data? Adding new members to the tree? See the instructions
 [here](https://github.com/nfischer/framily-tree/wiki/Updating-data-(adding-new-members)).
 
-## Creating your own family tree
 
-Check out the [forking
-instructions](https://github.com/nfischer/framily-tree/wiki/Forking-instructions).
 
 ## License
 
 All original source files are licensed under the MIT license. All dependencies
-are licensed under their respective open source licenses. The Theta Chi flag
-image was downloaded from [this
-site](https://upload.wikimedia.org/wikipedia/en/d/df/OX_Flag.png). The data
-displayed on this web page is populated by this [google spreadsheet] and is
-property of Theta Chi Fraternity Beta Alpha chapter and its initiates.
+are licensed under their respective open source licenses. The data
+displayed on this web page is populated by this [google spreadsheet].
 
-<!--
-  Forking instructions: if you are forking this project for your own
-  fraternity, you will need to change these links to point to the right data for
-  your project:
--->
 
 [Actions badge]: https://img.shields.io/github/actions/workflow/status/brennanwirt/oe-framily-tree/main.yml?style=flat-square&logo=github
 [GitHub Workflow]: https://github.com/brennanwirt/oe-framily-tree/actions/workflows/main.yml
