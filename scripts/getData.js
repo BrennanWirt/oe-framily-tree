@@ -5,7 +5,7 @@ var fs = require('fs');
 // Forking instructions: if you are forking this project for your own
 // fraternity, you will need to change the SPREADSHEET_ID to match the URL of
 // your new Google spreadsheet:
-var SPREADSHEET_ID = '1h6dVJKtETWX3Kr9PT6EaLu0gGavdi8Gnj4IlX155pfY';
+var SPREADSHEET_ID = '1kGr_f1V7GbE_XC7_Y-qmGGq_622l2mdgmE8nBQisT6s';
 
 var apiKey;
 try {
