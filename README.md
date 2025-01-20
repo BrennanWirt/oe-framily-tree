@@ -9,7 +9,7 @@ Check it out [online][GitHub Pages].
 ## What is this?
 
 This is an interactive family tree for the Omicron Epsilon Chapter of Phi Mu Alpha Sinfonia at Western Carolina University. 
-This project was forked from Nate Fischer's Wonderful[Framily Tree project.](https://github.com/nfischer/framily-tree)
+This project was forked from Nate Fischer's Wonderful [Framily Tree project.](https://github.com/nfischer/framily-tree)
 
 This family tree is entirely data-driven and easy to update. Data is pulled from
 a [google spreadsheet].

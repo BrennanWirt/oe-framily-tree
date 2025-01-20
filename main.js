@@ -160,7 +160,7 @@ function createNodes(brothers_) {
       pledgeClassColor[lowerCaseClass] = getNewPledgeClassColor();
     }
 
-    bro.label = bro.name; // Display the name in the graph
+    bro.label =  `${bro.name}\n${bro.pledgeclass || ''}`; // Display the name in the graph
 
     nodes.push(bro); // Add this to the list of nodes to display
   }
