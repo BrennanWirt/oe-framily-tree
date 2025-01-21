@@ -360,7 +360,6 @@ var brothers = [
     "big": "Christopher Seay",
     "pledgeclass": "Spring 2021",
     "className": "Beta Beta",
-    "graduated": true,
     "shape": "box"
   },
   {
@@ -368,7 +367,6 @@ var brothers = [
     "big": "Jordan Felix",
     "pledgeclass": "Spring 2022",
     "className": "Beta Delta",
-    "graduated": true,
     "shape": "box"
   },
   {
@@ -376,7 +374,6 @@ var brothers = [
     "big": "Jordan Felix",
     "pledgeclass": "Spring 2023",
     "className": "Beta Zeta",
-    "graduated": true,
     "shape": "box"
   },
   {
@@ -384,7 +381,6 @@ var brothers = [
     "big": "Jordan Felix",
     "pledgeclass": "Fall 2023",
     "className": "Beta Eta",
-    "graduated": true,
     "shape": "box"
   },
   {
@@ -392,7 +388,6 @@ var brothers = [
     "big": "William Caldwell",
     "pledgeclass": "Fall 2023",
     "className": "Beta Eta",
-    "graduated": true,
     "shape": "box"
   },
   {
@@ -400,7 +395,6 @@ var brothers = [
     "big": "Dex Patterson",
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
-    "graduated": true,
     "shape": "box"
   },
   {
@@ -473,6 +467,7 @@ var brothers = [
     "big": "John Lequire",
     "pledgeclass": "Spring 2004",
     "className": "Rho",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -480,6 +475,7 @@ var brothers = [
     "big": "John Lequire",
     "pledgeclass": "Fall 2003",
     "className": "Pi",
+    "graduated": true,
     "expelled": true,
     "shape": "box"
   },
@@ -488,6 +484,7 @@ var brothers = [
     "big": "Brian Hummel",
     "pledgeclass": "Fall 2005",
     "className": "Upsilon",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -495,6 +492,7 @@ var brothers = [
     "big": "James (Brandon) Upchurch",
     "pledgeclass": "Fall 2006",
     "className": "Chi",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -502,6 +500,7 @@ var brothers = [
     "big": "James (Brandon) Upchurch",
     "pledgeclass": "Spring 2006",
     "className": "Phi",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -509,6 +508,7 @@ var brothers = [
     "big": "John Austin",
     "pledgeclass": "Spring 2008",
     "className": "Alpha Beta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -516,6 +516,7 @@ var brothers = [
     "big": "Steven Burke",
     "pledgeclass": "Fall 2007",
     "className": "Omega",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -523,6 +524,7 @@ var brothers = [
     "big": "Lance (L.B.) Faulkner",
     "pledgeclass": "Fall 2010",
     "className": "Alpha Eta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -530,6 +532,7 @@ var brothers = [
     "big": "Lance (L.B.) Faulkner",
     "pledgeclass": "Spring 2011",
     "className": "Alpha Theta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -537,6 +540,7 @@ var brothers = [
     "big": "Jake Waldrop",
     "pledgeclass": "Fall 2010",
     "className": "Alpha Lambda",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -544,6 +548,7 @@ var brothers = [
     "big": "Jake Waldrop",
     "pledgeclass": "Fall 2012",
     "className": "Alpha Nu",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -551,6 +556,7 @@ var brothers = [
     "big": "Julian Willis",
     "pledgeclass": "Fall 2016",
     "className": "Alpha Sigma",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -558,6 +564,7 @@ var brothers = [
     "big": "Dallas Slade",
     "pledgeclass": "Spring 2019",
     "className": "Alpha Psi",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -565,6 +572,7 @@ var brothers = [
     "big": "Julian Willis",
     "pledgeclass": "Spring 2015",
     "className": "Alpha Omicron",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -572,6 +580,7 @@ var brothers = [
     "big": "Tyrone Kiaku",
     "pledgeclass": "Spring 2016",
     "className": "Alpha Rho",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -579,6 +588,7 @@ var brothers = [
     "big": "Henry Wilson",
     "pledgeclass": "Spring 2018",
     "className": "Alpha Phi",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -586,6 +596,7 @@ var brothers = [
     "big": "Logan Strahley",
     "pledgeclass": "Fall 2020",
     "className": "Beta Alpha",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -593,6 +604,7 @@ var brothers = [
     "big": "Timothy (Timo) Cashman",
     "pledgeclass": "Spring 2022",
     "className": "Beta Delta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -607,6 +619,7 @@ var brothers = [
     "big": "Avery Surratt",
     "pledgeclass": "Spring 2011",
     "className": "Alpha Theta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -614,6 +627,7 @@ var brothers = [
     "big": "Brittain Nichols",
     "pledgeclass": "Fall 2012",
     "className": "Alpha Lambda",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -621,6 +635,7 @@ var brothers = [
     "big": "Brian Porterfield",
     "pledgeclass": "Fall 2015",
     "className": "Alpha Pi",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -628,6 +643,7 @@ var brothers = [
     "big": "Weston Yasaki",
     "pledgeclass": "Fall 2018",
     "className": "Alpha Chi",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -635,6 +651,7 @@ var brothers = [
     "big": "James (Andy) Carter",
     "pledgeclass": "Spring 2000",
     "className": "Kappa",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -642,6 +659,7 @@ var brothers = [
     "big": "Gregory Franklin",
     "pledgeclass": "Spring 2002",
     "className": "Xi",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -649,6 +667,7 @@ var brothers = [
     "big": "Gregory Franklin",
     "pledgeclass": "Fall 2001",
     "className": "Nu",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -656,6 +675,7 @@ var brothers = [
     "big": "John Paul Jones",
     "pledgeclass": "Fall 2002",
     "className": "Omicron",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -663,6 +683,7 @@ var brothers = [
     "big": "Michael Knight",
     "pledgeclass": "Spring 2005",
     "className": "Tau",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -670,6 +691,7 @@ var brothers = [
     "big": "Andy Pitman",
     "pledgeclass": "Fall 2003",
     "className": "Pi",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -677,6 +699,7 @@ var brothers = [
     "big": "Andy Pitman",
     "pledgeclass": "Spring 2000",
     "className": "Lambda",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -684,6 +707,7 @@ var brothers = [
     "big": "Julius Dickens",
     "pledgeclass": "Spring 2001",
     "className": "Mu",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -691,6 +715,7 @@ var brothers = [
     "big": "Kristopher (K.C.) Armstrong",
     "pledgeclass": "Fall 1997",
     "className": "Zeta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -698,6 +723,7 @@ var brothers = [
     "big": "Sam Aikin",
     "pledgeclass": "Spring 2004",
     "className": "Rho",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -705,6 +731,7 @@ var brothers = [
     "big": "Sam Aikin",
     "pledgeclass": "Spring 2002",
     "className": "Xi",
+    "graduated": true,
     "expelled": true,
     "shape": "box"
   },
@@ -713,6 +740,7 @@ var brothers = [
     "big": "Joel Pagan",
     "pledgeclass": "Spring 1998",
     "className": "Eta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -720,6 +748,7 @@ var brothers = [
     "big": "Matt Bishop",
     "pledgeclass": "Spring 1999",
     "className": "Iota",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -727,6 +756,7 @@ var brothers = [
     "big": "Matt Bishop",
     "pledgeclass": "Spring 2000",
     "className": "Kappa",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -734,6 +764,7 @@ var brothers = [
     "big": "Matt Bishop",
     "pledgeclass": "Fall 1998",
     "className": "Theta",
+    "graduated": true,
     "shape": "box"
   }
 ];

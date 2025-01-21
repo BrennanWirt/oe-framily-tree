@@ -296,7 +296,7 @@ function draw() {
         nodesDataSet.update(node);
       };
       break;
-    case 'brotherStatus':
+    case 'highlightCollegiates':
       changeColor = function (node) {
         node.color = node.graduated ? '#d3d3d3' : 'lightblue'; // Use lighter gray
         nodesDataSet.update(node);
