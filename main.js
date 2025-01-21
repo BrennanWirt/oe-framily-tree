@@ -281,6 +281,70 @@ function findBrotherHelper(name, direction) {
   return false; // Could not find a match
 }
 
+function highlightBigs(nodeId) {
+  var currentNode = nodesGlobal.find(node => node.id === nodeId);
+  var highlightedNodes = [];
+  var highlightedEdges = [];
+
+  while (currentNode && currentNode.big) {
+    highlightedNodes.push(currentNode.id);
+    highlightedEdges.push(edgesGlobal.find(edge => edge.to === currentNode.id));
+    currentNode = nodesGlobal.find(node => node.id === currentNode.big.id);
+  }
+
+  highlightedNodes.push(currentNode.id); // Add the top-most big
+
+  nodesGlobal.forEach(node => {
+    node.color = highlightedNodes.includes(node.id) ? 'lightblue' : '#d3d3d3';
+    nodesDataSet.update(node);
+  });
+
+  edgesGlobal.forEach(edge => {
+    edge.color = highlightedEdges.includes(edge) ? { color: 'lightblue' } : { color: '#d3d3d3' };
+    edgesDataSet.update(edge);
+  });
+}
+
+function resetColors() {
+  var colorMethod = document.getElementById('layout').value;
+  var changeColor;
+
+  switch (colorMethod) {
+    case 'pledgeClass':
+      changeColor = function (node) {
+        node.color = node.pledgeclass
+          ? pledgeClassColorGlobal[node.pledgeclass.toLowerCase()]
+          : 'lightgrey';
+        nodesDataSet.update(node);
+      };
+      break;
+    case 'highlightCollegiates':
+      changeColor = function (node) {
+        node.color = node.graduated ? '#d3d3d3' : 'lightblue'; // Use lighter gray
+        nodesDataSet.update(node);
+      };
+      break;
+    case 'branches':
+      var branchColors = assignBranchColors(nodesGlobal);
+      changeColor = function (node) {
+        node.color = branchColors[node.id];
+        nodesDataSet.update(node);
+      };
+      break;
+    default:
+      changeColor = function (node) {
+        node.color = 'lightgrey';
+        nodesDataSet.update(node);
+      };
+      break;
+  }
+  nodesGlobal.forEach(changeColor);
+  edgesGlobal.forEach(edge => {
+    edge.color = { color: 'lightgrey' };
+    edgesDataSet.update(edge);
+  });
+}
+
 /* istanbul ignore next */
 function draw() {
   createNodesHelper();
@@ -344,6 +408,18 @@ function draw() {
       }
     };
     network = new vis.Network(container, data, options);
+
+    network.on('doubleClick', function (params) {
+      if (params.nodes.length > 0) {
+        highlightBigs(params.nodes[0]);
+      }
+    });
+
+    network.on('click', function (params) {
+      if (params.nodes.length === 0) {
+        resetColors();
+      }
+    });
   } else {
     network.redraw();
   }
