@@ -109,7 +109,8 @@ function createNodes(brothers_) {
       bro.color = 'red';
       bro.font = { color: 'red', decoration: 'line-through' };
     }
-
+    // Set the shape of the node to 'box'
+    bro.shape = 'box';
     nodes.push(bro); // Add this to the list of nodes to display
   }
 
@@ -247,6 +248,12 @@ function draw() {
         nodesDataSet.update(node);
       };
       break;
+    case 'brotherStatus':
+      changeColor = function (node) {
+        node.color = node.graduated ? '#d3d3d3' : 'lightblue'; // Use lighter gray
+        nodesDataSet.update(node);
+      };
+      break;
     default:
       changeColor = function (node) {
         node.color = 'lightgrey';
@@ -268,7 +275,7 @@ function draw() {
         hierarchical: {
           sortMethod: 'directed',
           nodeSpacing: 175, // Adjust the spacing between nodes
-          levelSeparation: 120 // Adjust the separation between levels
+          levelSeparation: 125 // Adjust the separation between levels
         },
       },
       edges: {

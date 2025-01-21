@@ -51,6 +51,14 @@ function (err, result) {
     } else if (bro.expelled === 'FALSE') {
       bro.expelled = false;
     }
+    // Set the shape of the node to 'box'
+    bro.shape = 'box';
+    // Handle the "graduated" column.
+    if (bro.graduated === 'TRUE') {
+      bro.graduated = true;
+    } else if (bro.graduated === 'FALSE') {
+      bro.graduated = false;
+    }
     return bro;
   });
 
