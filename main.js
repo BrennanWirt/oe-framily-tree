@@ -43,6 +43,7 @@ var DIRECTION = {
 var KEYCODE_ENTER = 13;
 
 var pledgeClassColorGlobal = {};
+var branchColorGlobal = {};
 
 function ColorSpinner(colorObj, spinAmount) {
   this.spinAmount = spinAmount;
@@ -59,6 +60,53 @@ var getNewPledgeClassColor = (function () {
     return spinner2.spin();
   };
 }());
+
+function getNewBranchColor() {
+  var color = new tinycolor({ h: Math.random() * 360, s: 0.5, v: 0.9 });
+  return color.toHexString();
+}
+
+function assignBranchColors(nodes) {
+  var branchColor = {};
+  var visited = {};
+
+  function getColorForBranch(branchId) {
+    if (!branchColorGlobal[branchId]) {
+      branchColorGlobal[branchId] = new tinycolor({ h: (branchId * 137.508) % 360, s: 0.5, v: 0.9 }).toHexString();
+    }
+    return branchColorGlobal[branchId];
+  }
+
+  function dfs(node, color) {
+    if (visited[node.id]) return;
+    visited[node.id] = true;
+    node.color = color;
+    branchColor[node.id] = color;
+    nodesDataSet.update(node);
+
+    var hasLittles = false;
+    nodes.forEach(function (child) {
+      if (child.big && child.big.id === node.id) {
+        hasLittles = true;
+        dfs(child, color);
+      }
+    });
+
+    if (!hasLittles && !node.big) {
+      node.color = '#d3d3d3'; // Set to gray if no littles and no big
+      nodesDataSet.update(node);
+    }
+  }
+
+  nodes.forEach(function (node) {
+    if (!node.big) {
+      var branchColorValue = getColorForBranch(node.id);
+      dfs(node, branchColorValue);
+    }
+  });
+
+  return branchColor;
+}
 
 /* istanbul ignore next */
 /**
@@ -251,6 +299,13 @@ function draw() {
     case 'brotherStatus':
       changeColor = function (node) {
         node.color = node.graduated ? '#d3d3d3' : 'lightblue'; // Use lighter gray
+        nodesDataSet.update(node);
+      };
+      break;
+    case 'branches':
+      var branchColors = assignBranchColors(nodesGlobal);
+      changeColor = function (node) {
+        node.color = branchColors[node.id];
         nodesDataSet.update(node);
       };
       break;
