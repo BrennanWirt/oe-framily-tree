@@ -292,7 +292,7 @@ var brothers = [
     "shape": "box"
   },
   {
-    "name": "Jerrord (Allen) Klaes",
+    "name": "Jerrold (Allen) Klaes",
     "big": "Eric Henson",
     "pledgeclass": "Spring 2005",
     "className": "Tau",
@@ -301,7 +301,7 @@ var brothers = [
   },
   {
     "name": "Tyler LaDuke",
-    "big": "Jerrord (Allen) Klaes",
+    "big": "Jerrold (Allen) Klaes",
     "pledgeclass": "Spring 2006",
     "className": "Phi",
     "graduated": true,
@@ -765,6 +765,379 @@ var brothers = [
     "pledgeclass": "Fall 1998",
     "className": "Theta",
     "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Andrew Craft",
+    "big": "Josh Shackleton",
+    "pledgeclass": "Spring 2002",
+    "className": "Xi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Alan (Jeremy) Tyson",
+    "big": "Josh Shackleton",
+    "pledgeclass": "Fall 2001",
+    "className": "Nu",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Matt Byrum",
+    "big": "Josh Shackleton",
+    "pledgeclass": "Spring 2000",
+    "className": "Kappa",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Mark Redd",
+    "big": "Matt Byrum",
+    "pledgeclass": "Fall 2001",
+    "className": "Nu",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Drew Umphlett",
+    "big": "Mark Redd",
+    "pledgeclass": "Spring 2002",
+    "className": "Xi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Chris Caldwell",
+    "big": "Drew Umphlett",
+    "pledgeclass": "Fall 2003",
+    "className": "Pi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Dan Nickel",
+    "big": "Chris Caldwell",
+    "pledgeclass": "Fall 2005",
+    "className": "Upsilon",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Lance Barton",
+    "big": "Dan Nickel",
+    "pledgeclass": "Spring 2007",
+    "className": "Psy",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Jeremy Bolduc",
+    "big": "Lance Barton",
+    "pledgeclass": "Spring 2010",
+    "className": "Alpha Zeta",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Jacob Richard",
+    "big": "Jeremy Bolduc",
+    "pledgeclass": "Spring 2011",
+    "className": "Alpha Theta",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Joey Pierce",
+    "big": "Jacob Richard",
+    "pledgeclass": "Fall 2012",
+    "className": "Alpha Lambda",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Mick Cauthen",
+    "big": "Lance Barton",
+    "pledgeclass": "Fall 2008",
+    "className": "Alpha Gamma",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Matt Bickford",
+    "big": "Lance Barton",
+    "pledgeclass": "Spring 2013",
+    "className": "Alpha Mu",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Malik Rowland",
+    "big": "Matt Bickford",
+    "pledgeclass": "Spring 2015",
+    "className": "Alpha Omicron",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Thomas Buchanan",
+    "big": "Malik Rowland",
+    "pledgeclass": "Spring 2015",
+    "className": "Alpha Chi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "CJ Clark",
+    "big": "Thomas Buchanan",
+    "pledgeclass": "Fall 2020",
+    "className": "Beta Alpha",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Elijah Henry",
+    "big": "CJ Clark",
+    "pledgeclass": "Spring 2023",
+    "className": "Beta Zeta",
+    "shape": "box"
+  },
+  {
+    "name": "Mitch Mullin",
+    "big": "CJ Clark",
+    "pledgeclass": "Spring 2022",
+    "className": "Beta Delta",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Jonathan Kitchens",
+    "big": "Malik Rowland",
+    "pledgeclass": "Spring 2016",
+    "className": "Alpha Rho",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Michael Durcan",
+    "big": "Jonathan Kitchens",
+    "pledgeclass": "Fall 2017",
+    "className": "Alpha Upsilon",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Nic Manshack",
+    "big": "Michael Durcan",
+    "pledgeclass": "Fall 2018",
+    "className": "Alpha Chi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Christopher (CP) McGuire",
+    "big": "Nic Manshack",
+    "pledgeclass": "Fall 2020",
+    "className": "Beta Alpha",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Ethan Rohl",
+    "big": "Nic Manshack",
+    "pledgeclass": "Fall 2019",
+    "className": "Alpha Omega",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Joseph Putnam",
+    "big": "Ethan Rohl",
+    "pledgeclass": "Fall 2020",
+    "className": "Beta Alpha",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Tommy Allison",
+    "big": "Joseph Putnam",
+    "pledgeclass": "Spring 2023",
+    "className": "Beta Zeta",
+    "shape": "box"
+  },
+  {
+    "name": "Carl White",
+    "big": "Tommy Allison",
+    "pledgeclass": "Spring 2024",
+    "className": "Beta Theta",
+    "shape": "box"
+  },
+  {
+    "name": "Clint Totherow",
+    "big": "Malik Rowland",
+    "pledgeclass": "Spring 2018",
+    "className": "Alpha Phi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Gregory Regling",
+    "big": "Clint Totherow",
+    "pledgeclass": "Fall 2019",
+    "className": "Alpha Omega",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Jim Ridel",
+    "big": "Matt Byrum",
+    "pledgeclass": "Spring 2002",
+    "className": "Xi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Chris Kale",
+    "big": "Matt Byrum",
+    "pledgeclass": "Fall 2003",
+    "className": "Pi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Sam Bogan",
+    "big": "Chris Kale",
+    "pledgeclass": "Fall 2005",
+    "className": "Upsilon",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Brandon Chapman",
+    "big": "Sam Bogan",
+    "pledgeclass": "Fall 2007",
+    "className": "Omega",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Chris Wilson",
+    "big": "Brandon Chapman",
+    "pledgeclass": "Fall 2009",
+    "className": "Alpha Epsilon",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Nick Rodriguez",
+    "big": "Chris Wilson",
+    "pledgeclass": "Spring 2011",
+    "className": "Alpha Theta",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Brandon Kassab",
+    "big": "Nick Rodriguez",
+    "pledgeclass": "Spring 2014",
+    "className": "Alpha Nu",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Dylan Pachorek",
+    "big": "Brandon Kassab",
+    "pledgeclass": "Spring 2017",
+    "className": "Alpha Tau",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "William (Thomas) Pendergrass",
+    "big": "Dylan Pachorek",
+    "pledgeclass": "Fall 2019",
+    "className": "Alpha Omega",
+    "graduated": true,
+    "expelled": true,
+    "shape": "box"
+  },
+  {
+    "name": "Arthur (Spence) Howell",
+    "big": "Brandon Kassab",
+    "pledgeclass": "Spring 2015",
+    "className": "Alpha Omicron",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Reginald Dawkins",
+    "big": "Arthur (Spence) Howell",
+    "pledgeclass": "Fall 2017",
+    "className": "Alpha Tau",
+    "graduated": true,
+    "expelled": true,
+    "shape": "box"
+  },
+  {
+    "name": "James Roddy",
+    "big": "Reginald Dawkins",
+    "pledgeclass": "Spring 2018",
+    "className": "Alpha Phi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Connor Nelson",
+    "big": "James Roddy",
+    "pledgeclass": "Fall 2020",
+    "className": "Beta Alpha",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Maxwell Foltz",
+    "big": "Connor Nelson",
+    "pledgeclass": "Spring 2022",
+    "className": "Beta Delta",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Maxwell Arnold",
+    "big": "Maxwell Foltz",
+    "pledgeclass": "Spring 2023",
+    "className": "Beta Zeta",
+    "shape": "box"
+  },
+  {
+    "name": "Sam Rohed",
+    "big": "Brandon Kassab",
+    "pledgeclass": "Fall 2016",
+    "className": "Alpha Sigma",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Harrison Burcham",
+    "big": "Sam Rohed",
+    "pledgeclass": "Spring 2019",
+    "className": "Alpha Psi",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Ash Ogata",
+    "big": "Harrison Burcham",
+    "pledgeclass": "Fall 2021",
+    "className": "Beta Gamma",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Brennan Wirt",
+    "big": "Ash Ogata",
+    "pledgeclass": "Spring 2023",
+    "className": "Beta Zeta",
     "shape": "box"
   }
 ];
