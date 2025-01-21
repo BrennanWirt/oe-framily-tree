@@ -1,5 +1,4 @@
-# Framily tree
-
+# OE Family Tree
 [![GitHub Actions][Actions badge]][GitHub Workflow]
 [![Codecov][Codecov badge]][Codecov link]
 [![Try online](https://img.shields.io/badge/try_it-online!-yellow.svg?style=flat-square)][GitHub Pages]
