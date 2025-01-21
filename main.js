@@ -42,7 +42,6 @@ var DIRECTION = {
 
 var KEYCODE_ENTER = 13;
 
-var familyColorGlobal = {};
 var pledgeClassColorGlobal = {};
 
 function ColorSpinner(colorObj, spinAmount) {
@@ -53,13 +52,6 @@ ColorSpinner.prototype.spin = function () {
   this.color = this.color.spin(this.spinAmount);
   return this.color.toHexString();
 };
-
-var getNewFamilyColor = (function () {
-  var spinner1 = new ColorSpinner({ h: 0, s: 0.6, v: 0.9 }, 77);
-  return function () {
-    return spinner1.spin();
-  };
-}());
 
 var getNewPledgeClassColor = (function () {
   var spinner2 = new ColorSpinner({ h: 0, s: 0.4, v: 0.9 }, 23);
@@ -91,68 +83,19 @@ function createNodes(brothers_) {
 
   var nodes = [];
   var edges = [];
-  var familyColor = {};
   var pledgeClassColor = {};
 
-  var familyToNode = {};
   for (var i = 0; i < oldLength; i++) {
     var bro = brothers_[i];
     bro.id = i;
 
-    var lowerCaseFamily = (bro.familystarted || '').toLowerCase();
-    if (lowerCaseFamily && !familyColor[lowerCaseFamily]) {
-      // Add a new family
-      familyColor[lowerCaseFamily] = getNewFamilyColor();
-
-      // Create a root for that family
-      var newNode = {
-        id: newIdx++, // increment
-        name: lowerCaseFamily,
-        label: bro.familystarted,
-        family: lowerCaseFamily,
-        inactive: true, // a family does not count as an active undergraduate
-        font: { size: 50 }, // super-size the font
-      };
-      familyToNode[lowerCaseFamily] = newNode;
-      nodes.push(newNode);
-    }
-
-    if (bro.big && lowerCaseFamily) {
-      // This person has a big bro, but they also started a new family of their
-      // own. This person gets two nodes, one underneath their big bro and
-      // another underneath their new family.
-
-      // Node underneath the big bro. This is a "fake" node: this will exist in
-      // the tree, however you can't search for it and it won't have any little
-      // bros.
-      edges.push({ from: bro.big, to: newIdx });
-      nodes.push(Object.assign({}, bro, {
-        id: newIdx++, // increment
-        name: '', // some unsearchable name.
-        label: '[' + bro.name + ']',
-        family: bro.familystarted.toLowerCase(),
-      }));
-
-      // Node underneath the new family. This is a "real" node: just like any
-      // other node, you can search for it and it will have little bros (if this
-      // brother had any little bros).
-      var familyNode = familyToNode[lowerCaseFamily];
-      edges.push({ from: familyNode.id, to: bro.id });
-    } else if (!bro.big && !lowerCaseFamily) {
-      /* istanbul ignore next */
-      throw new Error(
-        'Encountered a little bro ('
-        + bro.name
-        + ') without a big bro. This is a data entry error.');
-    } else if (lowerCaseFamily) {
-      // This person founded a family, and has no big bro, so put his node
-      // directly underneath the family node
-      edges.push({ from: familyToNode[lowerCaseFamily].id, to: bro.id });
-    } else {
+    if (bro.big) {
       // This person is just a regular brother
       edges.push({ from: bro.big, to: bro.id });
+    } else {
+      // This person is the oldest brother in the family line
+      bro.big = null;
     }
-    bro.big = bro.big || lowerCaseFamily;
 
     var lowerCaseClass = (bro.pledgeclass || '').toLowerCase();
     if (lowerCaseClass && !pledgeClassColor[lowerCaseClass]) {
@@ -160,7 +103,12 @@ function createNodes(brothers_) {
       pledgeClassColor[lowerCaseClass] = getNewPledgeClassColor();
     }
 
-    bro.label =  `${bro.name}\n${bro.pledgeclass || ''}`; // Display the name in the graph
+    bro.label = `${bro.name}\n${bro.className || ''}\n${bro.pledgeclass || ''}`; // Display the name in the graph
+
+    if (bro.expelled) {
+      bro.color = 'red';
+      bro.font = { color: 'red', decoration: 'line-through' };
+    }
 
     nodes.push(bro); // Add this to the list of nodes to display
   }
@@ -210,32 +158,13 @@ function createNodes(brothers_) {
     }
   });
 
-  function getFamily(node) {
-    node.family = node.family || node.familystarted;
-    if (node.family) return node.family;
-    try {
-      node.family = getFamily(node.big);
-    } catch (e) {
-      /* istanbul ignore next */
-      node.family = 'unknown';
-    }
-
-    return node.family;
-  }
-
   // re-process the brothers
   // Color all the nodes (according to this color scheme)
   nodes.forEach(function (node) {
-    // Get the family information
-    getFamily(node);
-
-    // Mark the family as active (if it has 1 or more active members)
-    if (!node.inactive && !node.graduated) {
-      familyToNode[node.family.toLowerCase()].inactive = false;
-    }
+    // No longer handling inactive or active status
   });
 
-  return [nodes, edges, familyColor, pledgeClassColor];
+  return [nodes, edges, pledgeClassColor];
 }
 
 // Only call this once (for effiencency & correctness)
@@ -247,8 +176,7 @@ function createNodesHelper() {
   var output = createNodes(brothers);
   nodesGlobal = output[0];
   edgesGlobal = output[1];
-  familyColorGlobal = output[2];
-  pledgeClassColorGlobal = output[3];
+  pledgeClassColorGlobal = output[2];
 
   nodesDataSet = new vis.DataSet(nodesGlobal);
   edgesDataSet = new vis.DataSet(edgesGlobal);
@@ -311,13 +239,6 @@ function draw() {
   var changeColor;
   var colorMethod = document.getElementById('layout').value;
   switch (colorMethod) {
-    case 'active':
-      changeColor = function (node) {
-        node.color = (node.inactive || node.graduated)
-          ? 'lightgrey' : 'lightblue';
-        nodesDataSet.update(node);
-      };
-      break;
     case 'pledgeClass':
       changeColor = function (node) {
         node.color = node.pledgeclass
@@ -326,9 +247,9 @@ function draw() {
         nodesDataSet.update(node);
       };
       break;
-    default: // 'family'
+    default:
       changeColor = function (node) {
-        node.color = familyColorGlobal[node.family.toLowerCase()];
+        node.color = 'lightgrey';
         nodesDataSet.update(node);
       };
       break;
@@ -346,12 +267,19 @@ function draw() {
       layout: {
         hierarchical: {
           sortMethod: 'directed',
+          nodeSpacing: 175, // Adjust the spacing between nodes
+          levelSeparation: 120 // Adjust the separation between levels
         },
       },
       edges: {
         smooth: true,
         arrows: { to: true },
       },
+      physics: {
+        hierarchicalRepulsion: {
+          nodeDistance: 125 // Adjust the distance between nodes
+        }
+      }
     };
     network = new vis.Network(container, data, options);
   } else {

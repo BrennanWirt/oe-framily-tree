@@ -33,10 +33,6 @@ function (err, result) {
   // We only need the data from Sheet1.
   result = result.Sheet1;
   result = result.map(function (bro) {
-    if (bro.familyStarted) {
-      bro.familystarted = bro.familyStarted;
-      delete bro.familyStarted;
-    }
     // Un-stringify booleans.
     Object.keys(bro).forEach(function (key) {
       if (bro[key] === 'TRUE') {
@@ -49,6 +45,12 @@ function (err, result) {
         delete bro[key];
       }
     });
+    // Handle the "expelled" column.
+    if (bro.expelled === 'TRUE') {
+      bro.expelled = true;
+    } else if (bro.expelled === 'FALSE') {
+      bro.expelled = false;
+    }
     return bro;
   });
 
