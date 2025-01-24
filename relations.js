@@ -2499,10 +2499,6 @@ var brothers = [
     "pledgeclass": "Fall 2023",
     "className": "Beta Eta",
     "shape": "box"
-  },
-  {
-    "familyStarted": true,
-    "shape": "box"
   }
 ];
 /* istanbul ignore else */
