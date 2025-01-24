@@ -2499,6 +2499,13 @@ var brothers = [
     "pledgeclass": "Fall 2023",
     "className": "Beta Eta",
     "shape": "box"
+  },
+  {
+    "name": "Wes Smith",
+    "big": "John Crain",
+    "pledgeclass": "Spring 2024",
+    "className": "Beta Theta",
+    "shape": "box"
   }
 ];
 /* istanbul ignore else */
