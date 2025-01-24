@@ -1,6 +1,6 @@
 @font-face {
   font-family: Junction;
-  src: url("../fonts/junction-regular/Junction.otf") format("opentype");
+  src: url("../fonts/DM_Serif_Text/DMSerifText-Regular.ttf") format("truetype");
 }
 body {
   background: #f2f2f2;
