@@ -2501,7 +2501,6 @@ var brothers = [
     "shape": "box"
   },
   {
-    "name": "Test",
     "familyStarted": true,
     "shape": "box"
   }
