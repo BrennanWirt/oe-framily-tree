@@ -2506,6 +2506,13 @@ var brothers = [
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
     "shape": "box"
+  },
+  {
+    "name": "Darrell Fisher",
+    "big": "Maxwell Arnold",
+    "pledgeclass": "Spring 2024",
+    "className": "Beta Theta",
+    "shape": "box"
   }
 ];
 /* istanbul ignore else */
