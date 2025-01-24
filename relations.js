@@ -754,7 +754,7 @@ var brothers = [
   },
   {
     "name": "Matt Bishop",
-    "big": "Joel Pagan",
+    "big": "Tim Turbyfill",
     "pledgeclass": "Spring 1998",
     "className": "Eta",
     "graduated": true,
