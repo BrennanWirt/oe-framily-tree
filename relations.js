@@ -4,6 +4,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -11,6 +12,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -18,6 +20,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -25,6 +28,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -32,6 +36,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -39,6 +44,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -46,6 +52,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -54,6 +61,7 @@ var brothers = [
     "className": "Alpha",
     "graduated": true,
     "expelled": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -62,6 +70,7 @@ var brothers = [
     "className": "Alpha",
     "graduated": true,
     "expelled": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -69,6 +78,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -76,6 +86,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -83,6 +94,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -90,6 +102,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -97,6 +110,7 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -104,6 +118,7 @@ var brothers = [
     "pledgeclass": "6/13/1905",
     "className": "Lambda Omega Chapter",
     "graduated": true,
+    "familyStarted": "Alpha Line",
     "shape": "box"
   },
   {
@@ -125,7 +140,7 @@ var brothers = [
   },
   {
     "name": "Kristopher (K.C.) Armstrong",
-    "big": "Asheley Cyre",
+    "big": "Tim Turbyfill",
     "pledgeclass": "Fall 1995",
     "className": "Beta",
     "graduated": true,
@@ -2248,6 +2263,7 @@ var brothers = [
     "pledgeclass": "@ETSU ",
     "className": "Lambda Sigma",
     "graduated": true,
+    "familyStarted": "Transfer",
     "shape": "box"
   },
   {
@@ -2272,6 +2288,7 @@ var brothers = [
     "pledgeclass": "@ETSU",
     "className": "Fall 2015 Alpha Sigma",
     "graduated": true,
+    "familyStarted": "Transfer",
     "shape": "box"
   },
   {
@@ -2312,6 +2329,7 @@ var brothers = [
     "name": "Keith Hoffman",
     "pledgeclass": "Spring 2004",
     "graduated": true,
+    "familyStarted": "Transfer",
     "shape": "box"
   },
   {
@@ -2344,6 +2362,7 @@ var brothers = [
     "pledgeclass": "Spring 2016",
     "className": "Alpha @UNCC- Alpha Rho",
     "graduated": true,
+    "familyStarted": "Transfer",
     "shape": "box"
   },
   {
@@ -2359,6 +2378,7 @@ var brothers = [
     "pledgeclass": "Spring 2005",
     "className": "Furman Transfer- Tau",
     "graduated": true,
+    "familyStarted": "Transfer",
     "shape": "box"
   },
   {
@@ -2478,6 +2498,11 @@ var brothers = [
     "big": "Jaden Brown",
     "pledgeclass": "Fall 2023",
     "className": "Beta Eta",
+    "shape": "box"
+  },
+  {
+    "name": "Test",
+    "familyStarted": true,
     "shape": "box"
   }
 ];
