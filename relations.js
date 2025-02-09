@@ -1564,8 +1564,8 @@ var brothers = [
   {
     "name": "Sean Reed",
     "big": "Will Richards",
-    "pledgeclass": "Spring 2020",
-    "className": "?",
+    "pledgeclass": "Spring 2017",
+    "className": "Alpha Tau",
     "graduated": true,
     "expelled": true,
     "shape": "box"
