@@ -60,7 +60,6 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
-    "expelled": true,
     "familyStarted": "Alpha Line",
     "shape": "box"
   },
@@ -69,7 +68,6 @@ var brothers = [
     "pledgeclass": "Spring 1995",
     "className": "Alpha",
     "graduated": true,
-    "expelled": true,
     "familyStarted": "Alpha Line",
     "shape": "box"
   },
@@ -135,7 +133,6 @@ var brothers = [
     "pledgeclass": "Spring 1998",
     "className": "Eta",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -168,7 +165,6 @@ var brothers = [
     "pledgeclass": "Fall 1997",
     "className": "Epsilon",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -177,7 +173,6 @@ var brothers = [
     "pledgeclass": "Spring 1999",
     "className": "Iota",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -420,7 +415,6 @@ var brothers = [
     "pledgeclass": "Fall 2006",
     "className": "Chi",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -493,7 +487,6 @@ var brothers = [
     "pledgeclass": "Fall 2003",
     "className": "Pi",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -749,7 +742,6 @@ var brothers = [
     "pledgeclass": "Spring 2002",
     "className": "Xi",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1075,7 +1067,6 @@ var brothers = [
     "pledgeclass": "Fall 2019",
     "className": "Alpha Omega",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1092,7 +1083,6 @@ var brothers = [
     "pledgeclass": "Fall 2017",
     "className": "Alpha Tau",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1250,7 +1240,6 @@ var brothers = [
     "pledgeclass": "Fall 2004",
     "className": "Sigma",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1307,7 +1296,6 @@ var brothers = [
     "pledgeclass": "Fall 2008",
     "className": "Alpha Gamma",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1348,7 +1336,6 @@ var brothers = [
     "pledgeclass": "Fall 2005",
     "className": "Upsilon",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1428,7 +1415,6 @@ var brothers = [
     "pledgeclass": "Spring 2022",
     "className": "Beta Delta",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1437,7 +1423,6 @@ var brothers = [
     "pledgeclass": "Fall 2010",
     "className": "Alpha Eta",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1486,7 +1471,6 @@ var brothers = [
     "pledgeclass": "Fall 2005",
     "className": "Upsilon",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1567,7 +1551,6 @@ var brothers = [
     "pledgeclass": "Spring 2017",
     "className": "Alpha Tau",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1909,7 +1892,6 @@ var brothers = [
     "pledgeclass": "Fall 2010",
     "className": "Alpha Eta",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -1926,7 +1908,6 @@ var brothers = [
     "pledgeclass": "Spring 2015",
     "className": "Alpha Omicron",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -2127,7 +2108,6 @@ var brothers = [
     "pledgeclass": "Spring 2011",
     "className": "Alpha Theta",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -2231,7 +2211,6 @@ var brothers = [
     "pledgeclass": "Fall 2019",
     "className": "Alpha Omega",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -2272,7 +2251,6 @@ var brothers = [
     "pledgeclass": "Fall 2001",
     "className": "Nu",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -2297,7 +2275,6 @@ var brothers = [
     "pledgeclass": "Fall 2018",
     "className": "Alpha Chi",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -2314,7 +2291,6 @@ var brothers = [
     "pledgeclass": "Spring 2019",
     "className": "Alpha Psi",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -2354,7 +2330,6 @@ var brothers = [
     "pledgeclass": "Spring 2011",
     "className": "Alpha Theta",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -2411,7 +2386,6 @@ var brothers = [
     "pledgeclass": "Fall 2016",
     "className": "Alpha Sigma",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
@@ -2460,7 +2434,6 @@ var brothers = [
     "pledgeclass": "Fall 2019",
     "className": "Alpha Omega",
     "graduated": true,
-    "expelled": true,
     "shape": "box"
   },
   {
