@@ -2513,6 +2513,83 @@ var brothers = [
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
     "shape": "box"
+  },
+  {
+    "name": "Davis Blankenship",
+    "big": "Ashton Giles",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Jerry Bradley",
+    "big": "Christopher (Kyle) Songy",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Theron Armstrong",
+    "big": "John Crain",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Sabur Mannsur",
+    "big": "William Caldwell",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Braeden Merwin",
+    "big": "Nick Shue",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Aidan Moore",
+    "big": "Luke Norton",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Jason Parker",
+    "big": "Jake Dutton",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Connor Perry",
+    "big": "Carl White",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Ethan Robinson",
+    "big": "Atticus Boersma",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Ryan Smith",
+    "big": "Bryan Clingerman",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Jackson White",
+    "big": "Marshall Miles",
+    "pledgeclass": "Spring 2025",
+    "className": "Beta Iota",
+    "shape": "box"
   }
 ];
 /* istanbul ignore else */
