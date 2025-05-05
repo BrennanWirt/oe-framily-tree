@@ -2516,7 +2516,7 @@ var brothers = [
     "shape": "box"
   },
   {
-    "name": "Braeden Merwin",
+    "name": "Braedan Merwin",
     "big": "Nick Shue",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
