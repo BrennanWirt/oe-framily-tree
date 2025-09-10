@@ -372,6 +372,7 @@ var brothers = [
     "big": "Christopher Seay",
     "pledgeclass": "Spring 2021",
     "className": "Beta Beta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -379,6 +380,7 @@ var brothers = [
     "big": "Jordan Felix",
     "pledgeclass": "Spring 2022",
     "className": "Beta Delta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -386,6 +388,7 @@ var brothers = [
     "big": "Jordan Felix",
     "pledgeclass": "Spring 2023",
     "className": "Beta Zeta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -622,6 +625,7 @@ var brothers = [
     "big": "Gavin Franklyn",
     "pledgeclass": "Fall 2023",
     "className": "Beta Eta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -1582,6 +1586,7 @@ var brothers = [
     "big": "Andrew Brown",
     "pledgeclass": "Fall 2022",
     "className": "Beta Epsilon",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -1716,6 +1721,7 @@ var brothers = [
     "big": "Ethan Waldo",
     "pledgeclass": "Spring 2023",
     "className": "Beta Zeta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -1787,7 +1793,6 @@ var brothers = [
     "big": "Salem Niehaus",
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
-    "graduated": true,
     "shape": "box"
   },
   {
@@ -2147,6 +2152,7 @@ var brothers = [
     "big": "Will Brodauf",
     "pledgeclass": "Fall 2022",
     "className": "Beta Epsilon",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -2457,6 +2463,7 @@ var brothers = [
     "big": "Jason Puckett",
     "pledgeclass": "Fall 2022",
     "className": "Beta Epsilon",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -2485,6 +2492,7 @@ var brothers = [
     "big": "Maxwell Arnold",
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -2492,6 +2500,7 @@ var brothers = [
     "big": "Ashton Giles",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
+    "graduated": true,
     "shape": "box"
   },
   {
@@ -2506,6 +2515,7 @@ var brothers = [
     "big": "John Crain",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
+    "graduated": true,
     "shape": "box"
   },
   {
