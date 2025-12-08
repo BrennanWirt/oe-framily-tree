@@ -406,7 +406,7 @@ var brothers = [
     "shape": "box"
   },
   {
-    "name": "Christopher (Kyle) Songy",
+    "name": "Kyle Songy",
     "big": "Dex Patterson",
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
@@ -1149,6 +1149,8 @@ var brothers = [
     "big": "Ash Ogata",
     "pledgeclass": "Spring 2023",
     "className": "Beta Zeta",
+    "bio": "Major: Computer Information Systems\nGrad Year: Spring 2026",
+    "picture": "https://i.imgur.com/ExdKOOz.png",
     "shape": "box"
   },
   {
@@ -2249,6 +2251,7 @@ var brothers = [
     "className": "Lambda Sigma",
     "graduated": true,
     "familyStarted": "Transfer",
+    "bio": "START TRANSFER FAMILIES",
     "shape": "box"
   },
   {
@@ -2505,7 +2508,7 @@ var brothers = [
   },
   {
     "name": "Jerry Bradley",
-    "big": "Christopher (Kyle) Songy",
+    "big": "Kyle Songy",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
     "shape": "box"
@@ -2572,6 +2575,118 @@ var brothers = [
     "big": "Marshall Miles",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
+    "shape": "box"
+  },
+  {
+    "name": "Carson Jermyn",
+    "big": "Marshall Miles",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Vincent Franklin",
+    "big": "Atticus Boersma",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Aidan Sevigny",
+    "big": "Maxwell Arnold",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Austin Brewer",
+    "big": "Bryan Clingerman",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Austin Williams",
+    "big": "Nick Shue",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Robert Hart",
+    "big": "Brennan Wirt",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Caleb Todd",
+    "big": "Bryan Clingerman",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Connor Owens",
+    "big": "Kyle Songy",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Corbyn Collins",
+    "big": "Ashton Giles",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Jacob Ruggiero",
+    "big": "Elijah Henry",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Eros Trujillo",
+    "big": "Nick Shue",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Jay Garback",
+    "big": "Wes Smith",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Michael Davenport",
+    "big": "Elijah Henry",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Erik Stauffer",
+    "big": "John Crain",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "Remy Fernandes",
+    "big": "Carl White",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
+    "shape": "box"
+  },
+  {
+    "name": "James Vielkanowitz",
+    "big": "Maxwell Arnold",
+    "pledgeclass": "Fall 2025",
+    "className": "Beta Kappa",
     "shape": "box"
   }
 ];
