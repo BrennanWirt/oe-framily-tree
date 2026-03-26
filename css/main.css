@@ -2,29 +2,407 @@
   font-family: Junction;
   src: url("../fonts/DM_Serif_Text/DMSerifText-Regular.ttf") format("truetype");
 }
-body {
-  background: #f2f2f2;
-  font-family: Junction, sans;
-  text-align: center;
+
+* {
+  box-sizing: border-box;
 }
-/* Aspect ratio based on https://stackoverflow.com/a/10441480 */
+
+body {
+  background: #eef0f4;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh; /* accounts for mobile browser chrome */
+  overflow: hidden;
+}
+
+header {
+  background: #111111;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  border-bottom: 4px solid #A51C30;
+  flex-shrink: 0;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-family: Junction, serif;
+  color: #D4AF37;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 20px;
+  background: white;
+  border-bottom: 1px solid #d4d9e3;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.controls label {
+  font-size: 0.85rem;
+  color: #4a5568;
+  font-weight: 500;
+}
+
+#layout {
+  padding: 6px 10px;
+  border: 1px solid #c9d0db;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  background: white;
+  color: #2d3748;
+  cursor: pointer;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+#layout:focus {
+  border-color: #A51C30;
+  box-shadow: 0 0 0 3px rgba(165, 28, 48, 0.15);
+}
+
+#searchbox {
+  padding: 6px 12px;
+  border: 1px solid #c9d0db;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  width: 190px;
+  color: #2d3748;
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+#searchbox:focus {
+  border-color: #A51C30;
+  box-shadow: 0 0 0 3px rgba(165, 28, 48, 0.15);
+}
+
+button {
+  padding: 6px 16px;
+  border: 1px solid #111111;
+  border-radius: 6px;
+  background: #111111;
+  color: #D4AF37;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+button:hover {
+  background: #A51C30;
+  border-color: #A51C30;
+}
+
+#prevsearch,
+#nextsearch {
+  padding: 6px 12px;
+}
+
+.active-filter-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #4a5568;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+}
+
+.active-filter-label input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+  accent-color: #A51C30;
+}
+
+.side-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 300px;
+  height: 100%;
+  background: white;
+  box-shadow: -4px 0 24px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%);
+  transition: transform 0.25s ease;
+  overflow-y: auto;
+  padding: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.side-panel.open {
+  transform: translateX(0);
+}
+
+#info-panel  { z-index: 200; }
+#class-panel { z-index: 210; }
+
+.class-link {
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.class-link:hover {
+  color: #111111;
+}
+
+.panel-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: -4px;
+}
+
+#class-panel-back {
+  background: transparent;
+  border: none;
+  color: #4a5568;
+  font-size: 0.85rem;
+  padding: 0;
+  cursor: pointer;
+}
+
+#class-panel-back:hover {
+  color: #A51C30;
+  background: transparent;
+  border-color: transparent;
+}
+
+#class-panel-close {
+  background: transparent;
+  border: none;
+  color: #4a5568;
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 0 4px;
+  cursor: pointer;
+}
+
+#class-panel-close:hover {
+  color: #A51C30;
+  background: transparent;
+  border-color: transparent;
+}
+
+#class-panel-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111111;
+  font-family: Junction, serif;
+}
+
+#class-panel-semester {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #A51C30;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+#class-panel-prev-wrap,
+#class-panel-next-wrap,
+#class-panel-members-wrap {
+  border-top: 1px solid #eef0f4;
+  padding-top: 10px;
+}
+
+#class-panel-prev-wrap h3,
+#class-panel-next-wrap h3,
+#class-panel-members-wrap h3 {
+  margin: 0 0 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4a5568;
+}
+
+#class-panel-prev,
+#class-panel-next {
+  font-size: 0.9rem;
+  color: #1e2d4f;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+#class-panel-prev:hover,
+#class-panel-next:hover {
+  color: #A51C30;
+}
+
+#class-panel-members {
+  margin: 0;
+  padding: 0 0 0 16px;
+  list-style: disc;
+}
+
+#class-panel-members li {
+  font-size: 0.9rem;
+  color: #1e2d4f;
+  cursor: pointer;
+  padding: 2px 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+#class-panel-members li:hover {
+  color: #A51C30;
+}
+
+#info-panel-close {
+  align-self: flex-end;
+  background: transparent;
+  border: none;
+  color: #4a5568;
+  font-size: 1.4rem;
+  line-height: 1;
+  padding: 0 4px;
+  cursor: pointer;
+  margin-bottom: -4px;
+}
+
+#info-panel-close:hover {
+  color: #A51C30;
+  background: transparent;
+  border-color: transparent;
+}
+
+#info-panel-photo {
+  width: 100%;
+  max-height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid #d4d9e3;
+}
+
+#info-panel-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #111111;
+  font-family: Junction, serif;
+}
+
+#info-panel-meta {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #A51C30;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+#info-panel-bio {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #4a5568;
+  line-height: 1.5;
+  border-top: 1px solid #eef0f4;
+  padding-top: 10px;
+}
+
+#info-panel-big-wrap,
+#info-panel-littles-wrap {
+  border-top: 1px solid #eef0f4;
+  padding-top: 10px;
+}
+
+#info-panel-big-wrap h3,
+#info-panel-littles-wrap h3 {
+  margin: 0 0 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #4a5568;
+}
+
+#info-panel-big[data-node-id] {
+  font-size: 0.9rem;
+  color: #1e2d4f;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+#info-panel-big[data-node-id]:hover {
+  color: #A51C30;
+}
+
+#info-panel-littles {
+  margin: 0;
+  padding: 0 0 0 16px;
+  list-style: disc;
+}
+
+#info-panel-littles li {
+  font-size: 0.9rem;
+  color: #1e2d4f;
+  cursor: pointer;
+  padding: 2px 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+#info-panel-littles li:hover {
+  color: #A51C30;
+}
+
+.zoom-controls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 10;
+}
+
+.zoom-controls button {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  border-radius: 6px;
+}
+
 #mynetwork {
   position: absolute;
   top: 0; bottom: 0; left: 0; right: 0;
-
-  background-image: url("");
-  background-size: 100%;
-  border: 1px solid lightgrey;
+  border: 1px solid #d4d9e3;
 }
+
 div.stretchy-wrapper {
-  width: 100%;
-  padding-bottom: 66%; /* 3:2, the flag's aspect ratio */
   position: relative;
+  flex: 1;
+  min-height: 0;
 }
 
 .arrow {
-  border: solid black;
-  border-width: 0px 3px 3px 0px;
+  border: solid white;
+  border-width: 0px 2px 2px 0px;
   display: inline-block;
   padding: 3px;
 }
@@ -43,4 +421,46 @@ div.stretchy-wrapper {
 .down {
   transform: rotate(45deg);
   -webkit-transform: rotate(45deg);
+}
+
+@media (max-width: 520px) {
+  header {
+    padding: 10px 16px;
+  }
+
+  header h1 {
+    font-size: 1rem;
+  }
+
+  .controls {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  #searchbox {
+    width: 130px;
+  }
+
+  /* Both panels become full-width bottom sheets on mobile */
+  .side-panel {
+    width: 100%;
+    height: 72%;
+    top: auto;
+    bottom: 0;
+    right: 0;
+    transform: translateY(100%);
+    border-radius: 16px 16px 0 0;
+    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.2);
+  }
+
+  .side-panel.open {
+    transform: translateY(0);
+  }
+
+  /* Bigger touch targets for zoom buttons on mobile */
+  .zoom-controls button {
+    width: 44px;
+    height: 44px;
+    font-size: 1.4rem;
+  }
 }

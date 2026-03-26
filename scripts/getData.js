@@ -9,7 +9,7 @@ var SPREADSHEET_ID = '1kGr_f1V7GbE_XC7_Y-qmGGq_622l2mdgmE8nBQisT6s';
 
 var apiKey;
 try {
-  apiKey = fs.readFileSync('local-api-key.txt', 'utf-8').trimRight('\n');
+  apiKey = fs.readFileSync('local-api-key.txt', 'utf-8').trimEnd();
 } catch (e) {
   var url = 'https://github.com/revolunet/spreadsheet-to-json';
   console.error('You need an API key to run this. Please see ' + url
@@ -37,6 +37,8 @@ function (err, result) {
     Object.keys(bro).forEach(function (key) {
       if (bro[key] === 'TRUE') {
         bro[key] = true;
+      } else if (bro[key] === 'FALSE') {
+        bro[key] = false;
       }
     });
     // Remove empty fields as a storage and readability optimization.
@@ -45,20 +47,8 @@ function (err, result) {
         delete bro[key];
       }
     });
-    // Handle the "expelled" column.
-    if (bro.expelled === 'TRUE') {
-      bro.expelled = true;
-    } else if (bro.expelled === 'FALSE') {
-      bro.expelled = false;
-    }
     // Set the shape of the node to 'box'
     bro.shape = 'box';
-    // Handle the "graduated" column.
-    if (bro.graduated === 'TRUE') {
-      bro.graduated = true;
-    } else if (bro.graduated === 'FALSE') {
-      bro.graduated = false;
-    }
     return bro;
   });
 

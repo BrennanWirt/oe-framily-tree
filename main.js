@@ -27,6 +27,10 @@ if (typeof didYouMean === 'undefined') {
 
 var network = null;
 
+function escapeHtml(str) {
+  return (str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 var createNodesCalled = false;
 var nodesGlobal;
 var edgesGlobal;
@@ -60,11 +64,6 @@ var getNewPledgeClassColor = (function () {
     return spinner2.spin();
   };
 }());
-
-function getNewBranchColor() {
-  var color = new tinycolor({ h: Math.random() * 360, s: 0.5, v: 0.9 });
-  return color.toHexString();
-}
 
 function assignBranchColors(nodes) {
   var branchColor = {};
@@ -127,7 +126,6 @@ function didYouMeanWrapper(invalidName) {
 
 function createNodes(brothers_) {
   var oldLength = brothers_.length;
-  var newIdx = oldLength;
 
   var nodes = [];
   var edges = [];
@@ -151,7 +149,7 @@ function createNodes(brothers_) {
       pledgeClassColor[lowerCaseClass] = getNewPledgeClassColor();
     }
 
-    bro.label = `${bro.name}\n${bro.className || ''}\n${bro.pledgeclass || ''}`; // Display the name in the graph
+    bro.label = `<b>${escapeHtml(bro.name)}</b>\n${escapeHtml(bro.className || '')}\n${escapeHtml(bro.pledgeclass || '')}`;
 
     if (bro.expelled) {
       bro.color = 'red';
@@ -205,12 +203,6 @@ function createNodes(brothers_) {
       }
       edge.from = node.id;
     }
-  });
-
-  // re-process the brothers
-  // Color all the nodes (according to this color scheme)
-  nodes.forEach(function (node) {
-    // No longer handling inactive or active status
   });
 
   return [nodes, edges, pledgeClassColor];
@@ -276,9 +268,169 @@ function findBrotherHelper(name, direction) {
       animation: true,
     });
     network.selectNodes([found.id]);
+    if (typeof document !== 'undefined') showInfoPanel(found.id);
     return true;
   }
   return false; // Could not find a match
+}
+
+function normalizeImageUrl(url) {
+  if (!url) return url;
+  // Convert Google Drive share/view links to the embeddable thumbnail endpoint
+  var idMatch = url.match(/\/d\/([a-zA-Z0-9_-]{10,})/) ||
+                url.match(/[?&]id=([a-zA-Z0-9_-]{10,})/);
+  if (idMatch && url.includes('drive.google.com')) {
+    return 'https://drive.google.com/thumbnail?id=' + idMatch[1] + '&sz=w400';
+  }
+  return url;
+}
+
+/* istanbul ignore next */
+function showInfoPanel(nodeId) {
+  var node = nodesGlobal.find(function (n) { return n.id === nodeId; });
+  if (!node) return;
+
+  // Photo
+  var photoEl = document.getElementById('info-panel-photo');
+  if (node.picture) {
+    photoEl.src = normalizeImageUrl(node.picture);
+    photoEl.alt = node.name;
+    photoEl.style.display = 'block';
+  } else {
+    photoEl.style.display = 'none';
+  }
+
+  // Name, class, pledge class
+  document.getElementById('info-panel-name').textContent = node.name;
+  var metaEl = document.getElementById('info-panel-meta');
+  metaEl.innerHTML = '';
+  if (node.className) {
+    var classLink = document.createElement('span');
+    classLink.className = 'class-link';
+    classLink.textContent = node.className;
+    classLink.dataset.pledgeClass = node.pledgeclass || '';
+    metaEl.appendChild(classLink);
+  }
+  if (node.className && node.pledgeclass) {
+    metaEl.appendChild(document.createTextNode(' · '));
+  }
+  if (node.pledgeclass) {
+    metaEl.appendChild(document.createTextNode(node.pledgeclass));
+  }
+
+  // Bio
+  var bioEl = document.getElementById('info-panel-bio');
+  if (node.bio) {
+    bioEl.textContent = node.bio;
+    bioEl.style.display = 'block';
+  } else {
+    bioEl.style.display = 'none';
+  }
+
+  // Big
+  var bigWrap = document.getElementById('info-panel-big-wrap');
+  var bigEl = document.getElementById('info-panel-big');
+  if (node.big) {
+    bigEl.textContent = node.big.name;
+    bigEl.dataset.nodeId = node.big.id;
+    bigWrap.style.display = 'block';
+  } else {
+    bigWrap.style.display = 'none';
+  }
+
+  // Littles
+  var littlesWrap = document.getElementById('info-panel-littles-wrap');
+  var littlesEl = document.getElementById('info-panel-littles');
+  var littles = nodesGlobal.filter(function (n) { return n.big && n.big.id === nodeId; });
+  littlesEl.innerHTML = '';
+  if (littles.length > 0) {
+    littles.forEach(function (little) {
+      var li = document.createElement('li');
+      li.textContent = little.name;
+      li.dataset.nodeId = little.id;
+      littlesEl.appendChild(li);
+    });
+    littlesWrap.style.display = 'block';
+  } else {
+    littlesWrap.style.display = 'none';
+  }
+
+  document.getElementById('info-panel').classList.add('open');
+}
+
+/* istanbul ignore next */
+function closeInfoPanel() {
+  document.getElementById('info-panel').classList.remove('open');
+  closeClassPanel();
+}
+
+function parsePledgeClass(str) {
+  if (!str) return 0;
+  var parts = str.trim().split(' ');
+  var year = parseInt(parts[parts.length - 1], 10) || 0;
+  var semester = parts[0].toLowerCase() === 'spring' ? 0 : 1;
+  return year * 2 + semester;
+}
+
+/* istanbul ignore next */
+function showClassPanel(pledgeClass) {
+  // Build an ordered map of pledgeclass → className
+  var classMap = {};
+  nodesGlobal.forEach(function (n) {
+    if (n.pledgeclass && !classMap[n.pledgeclass]) {
+      classMap[n.pledgeclass] = n.className || n.pledgeclass;
+    }
+  });
+  var sorted = Object.keys(classMap).sort(function (a, b) {
+    return parsePledgeClass(a) - parsePledgeClass(b);
+  });
+  var idx = sorted.indexOf(pledgeClass);
+
+  document.getElementById('class-panel-name').textContent = classMap[pledgeClass] || pledgeClass;
+  document.getElementById('class-panel-semester').textContent = pledgeClass;
+
+  // Previous class
+  var prevWrap = document.getElementById('class-panel-prev-wrap');
+  var prevEl = document.getElementById('class-panel-prev');
+  if (idx > 0) {
+    var prevClass = sorted[idx - 1];
+    prevEl.textContent = classMap[prevClass];
+    prevEl.dataset.pledgeClass = prevClass;
+    prevWrap.style.display = 'block';
+  } else {
+    prevWrap.style.display = 'none';
+  }
+
+  // Next class
+  var nextWrap = document.getElementById('class-panel-next-wrap');
+  var nextEl = document.getElementById('class-panel-next');
+  if (idx < sorted.length - 1) {
+    var nextClass = sorted[idx + 1];
+    nextEl.textContent = classMap[nextClass];
+    nextEl.dataset.pledgeClass = nextClass;
+    nextWrap.style.display = 'block';
+  } else {
+    nextWrap.style.display = 'none';
+  }
+
+  // Members
+  var membersEl = document.getElementById('class-panel-members');
+  membersEl.innerHTML = '';
+  nodesGlobal
+    .filter(function (n) { return n.pledgeclass === pledgeClass; })
+    .forEach(function (member) {
+      var li = document.createElement('li');
+      li.textContent = member.name;
+      li.dataset.nodeId = member.id;
+      membersEl.appendChild(li);
+    });
+
+  document.getElementById('class-panel').classList.add('open');
+}
+
+/* istanbul ignore next */
+function closeClassPanel() {
+  document.getElementById('class-panel').classList.remove('open');
 }
 
 function highlightBigs(nodeId) {
@@ -305,82 +457,78 @@ function highlightBigs(nodeId) {
   });
 }
 
-function resetColors() {
-  var colorMethod = document.getElementById('layout').value;
-  var changeColor;
-
+function getNodeColorFn(colorMethod) {
   switch (colorMethod) {
     case 'pledgeClass':
-      changeColor = function (node) {
+      return function (node) {
         node.color = node.pledgeclass
           ? pledgeClassColorGlobal[node.pledgeclass.toLowerCase()]
           : 'lightgrey';
         nodesDataSet.update(node);
       };
-      break;
     case 'highlightCollegiates':
-      changeColor = function (node) {
-        node.color = node.graduated ? '#d3d3d3' : 'lightblue'; // Use lighter gray
+      return function (node) {
+        node.color = node.graduated ? '#d3d3d3' : 'lightblue';
         nodesDataSet.update(node);
       };
-      break;
     case 'branches':
       var branchColors = assignBranchColors(nodesGlobal);
-      changeColor = function (node) {
+      return function (node) {
         node.color = branchColors[node.id];
         nodesDataSet.update(node);
       };
-      break;
     default:
-      changeColor = function (node) {
+      return function (node) {
         node.color = 'lightgrey';
         nodesDataSet.update(node);
       };
-      break;
   }
-  nodesGlobal.forEach(changeColor);
+}
+
+function resetColors() {
+  var colorMethod = document.getElementById('layout').value;
+  nodesGlobal.forEach(getNodeColorFn(colorMethod));
   edgesGlobal.forEach(edge => {
     edge.color = { color: 'lightgrey' };
     edgesDataSet.update(edge);
   });
 }
 
+function getActiveFamilyLineNodeIds() {
+  var children = {};
+  var nodeById = {};
+  nodesGlobal.forEach(function (node) {
+    children[node.id] = [];
+    nodeById[node.id] = node;
+  });
+  nodesGlobal.forEach(function (node) {
+    if (node.big) children[node.big.id].push(node.id);
+  });
+
+  // Active leaves: no children (bottom of a branch) and not graduated
+  var activeLeaves = nodesGlobal.filter(function (n) {
+    return children[n.id].length === 0 && !n.graduated;
+  });
+
+  // For each active leaf, walk the ancestor chain back to the root (Alpha class)
+  var activeIds = new Set();
+  activeLeaves.forEach(function (leaf) {
+    var current = leaf;
+    while (current) {
+      activeIds.add(current.id);
+      current = current.big ? nodeById[current.big.id] : null;
+    }
+  });
+
+  return activeIds;
+}
+
 /* istanbul ignore next */
 function draw() {
   createNodesHelper();
 
-  var changeColor;
   var colorMethod = document.getElementById('layout').value;
-  switch (colorMethod) {
-    case 'pledgeClass':
-      changeColor = function (node) {
-        node.color = node.pledgeclass
-          ? pledgeClassColorGlobal[node.pledgeclass.toLowerCase()]
-          : 'lightgrey';
-        nodesDataSet.update(node);
-      };
-      break;
-    case 'highlightCollegiates':
-      changeColor = function (node) {
-        node.color = node.graduated ? '#d3d3d3' : 'lightblue'; // Use lighter gray
-        nodesDataSet.update(node);
-      };
-      break;
-    case 'branches':
-      var branchColors = assignBranchColors(nodesGlobal);
-      changeColor = function (node) {
-        node.color = branchColors[node.id];
-        nodesDataSet.update(node);
-      };
-      break;
-    default:
-      changeColor = function (node) {
-        node.color = 'lightgrey';
-        nodesDataSet.update(node);
-      };
-      break;
-  }
-  nodesGlobal.forEach(changeColor);
+  nodesGlobal.forEach(getNodeColorFn(colorMethod));
   if (!network) {
     // create a network
     var container = document.getElementById('mynetwork');
@@ -393,8 +541,15 @@ function draw() {
       layout: {
         hierarchical: {
           sortMethod: 'directed',
-          nodeSpacing: 175, // Adjust the spacing between nodes
-          levelSeparation: 125 // Adjust the separation between levels
+          nodeSpacing: 175,
+          levelSeparation: 125
+        },
+      },
+      nodes: {
+        font: {
+          multi: 'html',
+          size: 13,
+          bold: { size: 15, mod: 'bold' },
         },
       },
       edges: {
@@ -403,11 +558,15 @@ function draw() {
       },
       physics: {
         hierarchicalRepulsion: {
-          nodeDistance: 125 // Adjust the distance between nodes
+          nodeDistance: 125
         }
       }
     };
     network = new vis.Network(container, data, options);
+
+    network.once('afterDrawing', function () {
+      network.fit({ animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
+    });
 
     network.on('doubleClick', function (params) {
       if (params.nodes.length > 0) {
@@ -418,6 +577,9 @@ function draw() {
     network.on('click', function (params) {
       if (params.nodes.length === 0) {
         resetColors();
+        closeInfoPanel();
+      } else {
+        showInfoPanel(params.nodes[0]);
       }
     });
   } else {
@@ -434,9 +596,50 @@ if (typeof document !== 'undefined') {
     draw();
 
     // Search feature
+    var removedNodeIds = [];
+    var removedEdgeData = [];
+
+    function applyActiveFilter() {
+      var activeIds = getActiveFamilyLineNodeIds();
+      removedNodeIds = nodesGlobal
+        .filter(function (n) { return !activeIds.has(n.id); })
+        .map(function (n) { return n.id; });
+      var inactiveSet = new Set(removedNodeIds);
+      removedEdgeData = edgesDataSet.get({
+        filter: function (e) { return inactiveSet.has(e.from) || inactiveSet.has(e.to); },
+      });
+      nodesDataSet.remove(removedNodeIds);
+      edgesDataSet.remove(removedEdgeData.map(function (e) { return e.id; }));
+      network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
+    }
+
+    function removeActiveFilter() {
+      var nodesToRestore = nodesGlobal.filter(function (n) { return removedNodeIds.includes(n.id); });
+      nodesDataSet.add(nodesToRestore);
+      edgesDataSet.add(removedEdgeData);
+      removedNodeIds = [];
+      removedEdgeData = [];
+      network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
+    }
+
     var dropdown = document.getElementById('layout');
     dropdown.onchange = function () {
-      draw();
+      if (document.getElementById('activeonly').checked) {
+        removeActiveFilter();
+        draw();
+        applyActiveFilter();
+      } else {
+        draw();
+      }
+    };
+
+    document.getElementById('activeonly').onchange = function () {
+      if (this.checked) {
+        applyActiveFilter();
+      } else {
+        removeActiveFilter();
+        resetColors();
+      }
     };
     function hidePrevNextButtons() {
       $('#prevsearch').css('display', 'none');
@@ -485,6 +688,57 @@ if (typeof document !== 'undefined') {
     document.getElementById('searchbutton').onclick = search.bind(undefined, DIRECTION.FORWARD);
     document.getElementById('nextsearch').onclick = search.bind(undefined, DIRECTION.FORWARD);
     document.getElementById('prevsearch').onclick = search.bind(undefined, DIRECTION.BACKWARD);
+    document.getElementById('info-panel-close').onclick = closeInfoPanel;
+
+    document.getElementById('info-panel').addEventListener('click', function (e) {
+      if (e.target.classList.contains('class-link')) {
+        showClassPanel(e.target.dataset.pledgeClass);
+        return;
+      }
+      var target = e.target.closest('[data-node-id]');
+      if (!target) return;
+      var nodeId = parseInt(target.dataset.nodeId, 10);
+      showInfoPanel(nodeId);
+      if (nodesDataSet.get(nodeId)) {
+        network.focus(nodeId, { scale: 0.9, animation: true });
+        network.selectNodes([nodeId]);
+      }
+    });
+
+    document.getElementById('class-panel-close').onclick = closeClassPanel;
+    document.getElementById('class-panel-back').onclick = closeClassPanel;
+
+    document.getElementById('class-panel').addEventListener('click', function (e) {
+      // Navigate to an adjacent class
+      var classTarget = e.target.closest('[data-pledge-class]');
+      if (classTarget) {
+        showClassPanel(classTarget.dataset.pledgeClass);
+        return;
+      }
+      // Navigate to a member — close class panel and open their info
+      var memberTarget = e.target.closest('[data-node-id]');
+      if (!memberTarget) return;
+      var nodeId = parseInt(memberTarget.dataset.nodeId, 10);
+      closeClassPanel();
+      showInfoPanel(nodeId);
+      if (nodesDataSet.get(nodeId)) {
+        network.focus(nodeId, { scale: 0.9, animation: true });
+        network.selectNodes([nodeId]);
+      }
+    });
+
+    document.getElementById('zoom-in').onclick = function () {
+      if (!network) return;
+      network.moveTo({ scale: network.getScale() * 1.45, animation: { duration: 200, easingFunction: 'easeInOutQuad' } });
+    };
+    document.getElementById('zoom-out').onclick = function () {
+      if (!network) return;
+      network.moveTo({ scale: network.getScale() / 1.45, animation: { duration: 200, easingFunction: 'easeInOutQuad' } });
+    };
+    document.getElementById('zoom-fit').onclick = function () {
+      if (!network) return;
+      network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
+    };
   });
 }
 

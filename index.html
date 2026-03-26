@@ -4,7 +4,7 @@
   <title>Omicron Epsilon Family Tree</title>
   <link rel="icon" type="image/ico" href="favicon.ico"/>
   <!-- Responsive design on mobile -->
-  <meta content="width=device-width" name="viewport"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
   <script type="text/javascript" src="lib/didYouMean-1.2.1.min.js"></script>
   <script type="text/javascript" src="lib/vis.min.js"></script>
@@ -17,25 +17,71 @@
 </head>
 
 <body>
-<h1>Omicron Epsilon Family Tree</h1>
-<p>Color-coding:
-<select id="layout">
-  <option value="pledgeClass">pledge class</option>
-  <option value="highlightCollegiates">highlight collegiates</option>
-  <option value="branches" selected>branches</option>
-</select></p>
-<div>
-  <input type="text" id="searchbox" placeholder="Brother's name...">
+<header>
+  <h1>Omicron Epsilon Family Tree</h1>
+</header>
+
+<div class="controls">
+  <label for="layout">Color by:</label>
+  <select id="layout">
+    <option value="pledgeClass">pledge class</option>
+    <option value="highlightCollegiates">highlight collegiates</option>
+    <option value="branches" selected>branches</option>
+  </select>
+  <input type="text" id="searchbox" placeholder="Search by name…">
   <button id="searchbutton">Search</button>
-  <button id="prevsearch" style='display: none'><i class="arrow up"></i></button>
-  <button id="nextsearch" style='display: none'><i class="arrow down"></i></button>
+  <button id="prevsearch" style="display: none"><i class="arrow up"></i></button>
+  <button id="nextsearch" style="display: none"><i class="arrow down"></i></button>
+  <label class="active-filter-label">
+    <input type="checkbox" id="activeonly">
+    Active lines only
+  </label>
 </div>
-<br/>
 
 <div class="stretchy-wrapper">
-<div id="mynetwork"></div>
+  <div id="mynetwork"></div>
+  <div class="zoom-controls">
+    <button id="zoom-in">+</button>
+    <button id="zoom-out">−</button>
+    <button id="zoom-fit" title="Fit to screen">⤢</button>
+  </div>
 </div>
 
-<p id="selection"></p>
+<div id="class-panel" class="side-panel">
+  <div class="panel-nav">
+    <button id="class-panel-back">← Back</button>
+    <button id="class-panel-close">&times;</button>
+  </div>
+  <h2 id="class-panel-name"></h2>
+  <p id="class-panel-semester"></p>
+  <div id="class-panel-prev-wrap">
+    <h3>← Previous Class</h3>
+    <span id="class-panel-prev"></span>
+  </div>
+  <div id="class-panel-next-wrap">
+    <h3>Next Class →</h3>
+    <span id="class-panel-next"></span>
+  </div>
+  <div id="class-panel-members-wrap">
+    <h3>Members</h3>
+    <ul id="class-panel-members"></ul>
+  </div>
+</div>
+
+<div id="info-panel" class="side-panel">
+  <button id="info-panel-close">&times;</button>
+  <img id="info-panel-photo" alt="" referrerpolicy="no-referrer" />
+  <h2 id="info-panel-name"></h2>
+  <p id="info-panel-meta"></p>
+  <p id="info-panel-bio"></p>
+  <div id="info-panel-big-wrap">
+    <h3>Big</h3>
+    <span id="info-panel-big"></span>
+  </div>
+  <div id="info-panel-littles-wrap">
+    <h3>Littles</h3>
+    <ul id="info-panel-littles"></ul>
+  </div>
+</div>
 </body>
 </html>
