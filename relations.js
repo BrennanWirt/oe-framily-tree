@@ -1148,7 +1148,7 @@ var brothers = [
     "big": "Ash Ogata",
     "pledgeclass": "Spring 2023",
     "className": "Beta Zeta",
-    "bio": "Major: Computer Information Systems\nGrad Year: Spring 2026\nPositions Held: Historian, President\nBio: Hello! My name is Brennan, and I was the President for the 2025-2026 School Year, as well as the Historian that Created this Family Tree! If anything goes awry, please reach out to me at brennanwirt@gmail.com. SLIBFS! ",
+    "bio": "Major: Computer Information Systems\nGrad Year: Summer 2026\nPositions Held: Historian, President\nBio: Hello! My name is Brennan, and I was the President for the 2025-2026 School Year, as well as the Historian that Created this Family Tree! If anything goes awry, please reach out to me at brennanwirt@gmail.com. SLIBFS! ",
     "picture": "https://drive.google.com/file/d/13NN0xSaiPk8uDeuG7MaQfc1BIVI1q7Dv/view?usp=drive_link",
     "shape": "box"
   },
@@ -1415,6 +1415,7 @@ var brothers = [
     "pledgeclass": "Spring 2023",
     "className": "Beta Zeta",
     "graduated": true,
+    "bio": "Major: Music Education\nGrad Year: Fall 2025\nPositions Held: Public Relations Committee Head\nBio: Sean Ohmann became a Sinfonian in Spring 2023 as a part of the Beta Zeta class. In his time with the brotherhood he served as the Public Relations Committee Head and restarted the \"Brother of the Week\" social media series; highlighting graduating brothers', their accomplishments, and their lasting impacts on their brothers. He graduated in December 2025 with a bachelor’s degree in music education and a concentration in Instrumental Music and Saxophone, studying with Dr. Margaret Underwood and Dr. Ian Jeffress. \n\nSean has performed internationally as a member of the WASBE Youth Wind Orchestra in Gwangju, South Korea, and served as principal saxophonist in the Wind Ensemble from 2022 to 2025. He was also a founding member and ensemble coordinator for The Fraction Quartet. Under his leadership, The Fraction Quartet was selected to perform twice at the U.S. Navy International Saxophone Symposium in Fairfax, Virginia.\n\nBeyond performance, Sean is a brother also a brother of Kappa Kappa Psi and a member of NAFME, NCBA, and the NBA. His passion for teaching is grounded in a philosophy of developing caring, responsible, and hard-working student leaders. He strives to empower his students to create and perform music they enjoy while becoming thoughtful colleagues, critical thinkers, and dedicated stewards of music.\n\nOutside of music, Sean is an avid photographer, hiker, and lover of cats. You can connect with Sean on Instagram (@Boring_Sean) or on Facebook.",
     "shape": "box"
   },
   {
