@@ -226,7 +226,7 @@ function createNodesHelper() {
 function findBrother(name, nodes, prevElem, direction) {
   var lowerCaseName = name.toLowerCase();
   var matches = nodes.filter(function (element) {
-    return element.name.toLowerCase().includes(lowerCaseName);
+    return element.name && element.name.toLowerCase().includes(lowerCaseName);
   });
   if (matches.length === 0) {
     return undefined;
