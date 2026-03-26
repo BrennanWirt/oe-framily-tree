@@ -1779,6 +1779,8 @@ var brothers = [
     "pledgeclass": "Fall 2020",
     "className": "Beta Alpha",
     "graduated": true,
+    "bio": "Major: Philosophy\n\nGrad Year: 2024\nPositions Held: Vice President, ARO, Faculty Advisor\n",
+    "picture": "https://drive.google.com/file/d/1eEgq-a950CqnXW8YbBcL18Wl08djv1fS/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -2443,6 +2445,7 @@ var brothers = [
     "pledgeclass": "Spring 2017",
     "className": "Alpha Tau",
     "graduated": true,
+    "bio": "Major: Political Science AND Communications with a concentration in Public Relations Grad Year: 2020 Positions Held: Warden, Secretary, President, CPR Bio: Go Cats!",
     "shape": "box"
   },
   {
@@ -2579,6 +2582,8 @@ var brothers = [
     "big": "Atticus Boersma",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
+    "bio": "Major: Communications Grad Year: Spring 2028 ",
+    "picture": "https://drive.google.com/file/d/1kiA--X5weaIup34_wIk_ASP4iTMtSTpL/view?usp=drive_link",
     "shape": "box"
   },
   {
