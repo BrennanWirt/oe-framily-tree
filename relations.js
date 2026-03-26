@@ -200,9 +200,6 @@ var brothers = [
     "shape": "box"
   },
   {
-    "shape": "box"
-  },
-  {
     "name": "Adrian Jelley",
     "big": "Buddy Huckabee",
     "pledgeclass": "Fall 1997",
@@ -980,6 +977,8 @@ var brothers = [
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
     "graduated": true,
+    "bio": "Major: Natural Resource Management and Biology\nGrad Year: Fall 2025\nPositions Held: Warden\nBio: Music is the Esperanza of the soul. All Hail. MNKB.",
+    "picture": "https://drive.google.com/file/d/10FHK6NjeD3tCdfIeY6_d_Q6aX8EzMb3B/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -1156,6 +1155,7 @@ var brothers = [
     "big": "Brennan Wirt",
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
+    "bio": "Major: Philosohpy and Religion\nGrad Year: Spring 2026\nPositions Held: FEO",
     "shape": "box"
   },
   {
