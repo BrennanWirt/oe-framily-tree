@@ -2675,6 +2675,7 @@ var brothers = [
     "pledgeclass": "Fall 2025",
     "className": "Beta Kappa",
     "bio": "Major: Philosophy and Religion\nGrad Year: Spring 2028\nBio: I love Mr. Pibb!",
+    "picture": "https://drive.google.com/file/d/1C3CKcGLnzNvWiKvMEoIRiT_APuol9NYc/view?usp=drive_link",
     "shape": "box"
   },
   {
