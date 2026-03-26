@@ -373,6 +373,8 @@ var brothers = [
     "pledgeclass": "Spring 2022",
     "className": "Beta Delta",
     "graduated": true,
+    "bio": "Major: Music Industry\nGrad Year: Summer 2025\nPositions Held: Warden, President",
+    "picture": "https://drive.google.com/file/d/14e-Jiz_RNPr8FA0wzf0-DzSJRlUCmyht/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -1356,6 +1358,7 @@ var brothers = [
     "pledgeclass": "Spring 2008",
     "className": "Alpha Beta",
     "graduated": true,
+    "bio": "Major: Criminal Justice\nGrad Year: 2011\nPositions Held: Warden\n",
     "shape": "box"
   },
   {
@@ -1796,6 +1799,8 @@ var brothers = [
     "big": "Salem Niehaus",
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
+    "bio": "Major: Chemistry and Biology, Anthropology Minor\nGrad Year: Fall 2027\nPositions Held: VP, ACPR\nBio: shoutout to my loud homie #northernmockingbird",
+    "picture": "https://drive.google.com/file/d/178jlnZpeFnOenIey0Xj-s3WMmw6CfyUD/view?usp=drive_link",
     "shape": "box"
   },
   {
