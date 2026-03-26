@@ -433,6 +433,23 @@ function closeClassPanel() {
   document.getElementById('class-panel').classList.remove('open');
 }
 
+/* istanbul ignore next */
+function highlightClassMembers(pledgeClass) {
+  var memberIds = nodesGlobal
+    .filter(function (n) { return n.pledgeclass === pledgeClass; })
+    .map(function (n) { return n.id; });
+
+  nodesGlobal.forEach(function (node) {
+    node.color = memberIds.includes(node.id) ? 'lightblue' : '#d3d3d3';
+    nodesDataSet.update(node);
+  });
+  edgesGlobal.forEach(function (edge) {
+    edge.color = { color: '#d3d3d3' };
+    edgesDataSet.update(edge);
+  });
+  network.selectNodes(memberIds);
+}
+
 function highlightBigs(nodeId) {
   var currentNode = nodesGlobal.find(node => node.id === nodeId);
   var highlightedNodes = [];
@@ -657,6 +674,28 @@ if (typeof document !== 'undefined') {
       }
       direction = direction || DIRECTION.FORWARD;
       var query = $('#searchbox').val();
+
+      // Check if query matches a class name or pledge class identifier
+      if (query) {
+        var lowerQuery = query.toLowerCase();
+        var classMatch = null;
+        nodesGlobal.forEach(function (n) {
+          if (!classMatch && n.pledgeclass) {
+            if ((n.className && n.className.toLowerCase() === lowerQuery) ||
+                n.pledgeclass.toLowerCase() === lowerQuery) {
+              classMatch = n.pledgeclass;
+            }
+          }
+        });
+        if (classMatch) {
+          showClassPanel(classMatch);
+          highlightClassMembers(classMatch);
+          $('#searchbox').css('background-color', 'white');
+          hidePrevNextButtons();
+          return;
+        }
+      }
+
       var success = findBrotherHelper(query, direction);
 
       // Indicate if the search succeeded or not.
