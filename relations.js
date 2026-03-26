@@ -1595,7 +1595,7 @@ var brothers = [
     "big": "Luke Norton",
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
-    "bio": "Major: Anthropology\nGrad Year: Spring 2026\nBio: Goblins will see you cast fireball and proclaim \"he cannot wield a blade.\"",
+    "bio": "Major: Anthropology\nGrad Year: Spring 2026\nPositions Held: Secretary\nBio: Goblins will see you cast fireball and proclaim \"he cannot wield a blade.\"",
     "shape": "box"
   },
   {
@@ -2612,6 +2612,8 @@ var brothers = [
     "big": "Bryan Clingerman",
     "pledgeclass": "Fall 2025",
     "className": "Beta Kappa",
+    "bio": "Major: Criminal Justice\nGrad Year: 2028\nBio: I just love my boys",
+    "picture": "https://drive.google.com/file/d/1KI9Tle33bI5TBIF9fPGV41MVH-M9_7sg/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -2640,6 +2642,7 @@ var brothers = [
     "big": "Kyle Songy",
     "pledgeclass": "Fall 2025",
     "className": "Beta Kappa",
+    "bio": "Major: Mechnical Engineering\nGrad Year: Spring 2027\nBio: Deuteronomy 28:28",
     "shape": "box"
   },
   {
@@ -2670,6 +2673,7 @@ var brothers = [
     "big": "Wes Smith",
     "pledgeclass": "Fall 2025",
     "className": "Beta Kappa",
+    "bio": "Major: Philosophy and Religion\nGrad Year: Spring 2028\nBio: I love Mr. Pibb!",
     "shape": "box"
   },
   {

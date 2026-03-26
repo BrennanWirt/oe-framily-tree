@@ -289,6 +289,7 @@ function normalizeImageUrl(url) {
 function showInfoPanel(nodeId) {
   var node = nodesGlobal.find(function (n) { return n.id === nodeId; });
   if (!node) return;
+  highlightPersonFamily(nodeId);
 
   // Photo
   var photoEl = document.getElementById('info-panel-photo');
@@ -464,6 +465,39 @@ function highlightClassMembers(pledgeClass) {
   });
   network.selectNodes(memberIds);
   network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
+}
+
+function highlightPersonFamily(nodeId) {
+  var node = nodesGlobal.find(function (n) { return n.id === nodeId; });
+  if (!node) return;
+
+  var highlightedNodes = [nodeId];
+  var highlightedEdgeIds = new Set();
+
+  // Add big
+  if (node.big) {
+    highlightedNodes.push(node.big.id);
+    var bigEdge = edgesGlobal.find(function (e) { return e.to === nodeId; });
+    if (bigEdge) highlightedEdgeIds.add(bigEdge.id);
+  }
+
+  // Add littles
+  nodesGlobal.forEach(function (n) {
+    if (n.big && n.big.id === nodeId) {
+      highlightedNodes.push(n.id);
+      var littleEdge = edgesGlobal.find(function (e) { return e.to === n.id; });
+      if (littleEdge) highlightedEdgeIds.add(littleEdge.id);
+    }
+  });
+
+  nodesGlobal.forEach(function (n) {
+    n.color = highlightedNodes.includes(n.id) ? 'lightblue' : '#d3d3d3';
+    nodesDataSet.update(n);
+  });
+  edgesGlobal.forEach(function (e) {
+    e.color = highlightedEdgeIds.has(e.id) ? { color: 'lightblue' } : { color: '#d3d3d3' };
+    edgesDataSet.update(e);
+  });
 }
 
 function highlightBigs(nodeId) {
