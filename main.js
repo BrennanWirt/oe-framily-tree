@@ -321,7 +321,21 @@ function showInfoPanel(nodeId) {
   // Bio
   var bioEl = document.getElementById('info-panel-bio');
   if (node.bio) {
-    bioEl.textContent = node.bio;
+    bioEl.innerHTML = '';
+    var bioLabels = ['Major:', 'Grad Year:', 'Positions Held:', 'Bio:'];
+    var bioLines = node.bio.split('\n').filter(function (l) { return l.trim(); });
+    bioLines.forEach(function (line, i) {
+      if (i > 0) bioEl.appendChild(document.createElement('br'));
+      var matched = bioLabels.find(function (lbl) { return line.startsWith(lbl); });
+      if (matched) {
+        var strong = document.createElement('strong');
+        strong.textContent = matched;
+        bioEl.appendChild(strong);
+        bioEl.appendChild(document.createTextNode(line.slice(matched.length)));
+      } else {
+        bioEl.appendChild(document.createTextNode(line));
+      }
+    });
     bioEl.style.display = 'block';
   } else {
     bioEl.style.display = 'none';
@@ -426,6 +440,7 @@ function showClassPanel(pledgeClass) {
     });
 
   document.getElementById('class-panel').classList.add('open');
+  highlightClassMembers(pledgeClass);
 }
 
 /* istanbul ignore next */
@@ -689,7 +704,6 @@ if (typeof document !== 'undefined') {
         });
         if (classMatch) {
           showClassPanel(classMatch);
-          highlightClassMembers(classMatch);
           $('#searchbox').css('background-color', 'white');
           hidePrevNextButtons();
           return;

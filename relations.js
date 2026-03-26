@@ -2473,7 +2473,7 @@ var brothers = [
     "big": "Jason Puckett",
     "pledgeclass": "Spring 2023",
     "className": "Beta Zeta",
-    "bio": "Major: Mechanical Engineering\nGrad Year: Spring 2026\nBio: Firsbee, Saxophone, and cool guy extraordinaire",
+    "bio": "Major: Mechanical Engineering\nGrad Year: Spring 2026\nBio: Frisbee, Saxophone, and cool guy extraordinaire",
     "picture": "https://drive.google.com/file/d/1X6BBxcGhXN3alqXyCwzEndIYfaiVq_6w/view?usp=drive_link",
     "shape": "box"
   },
@@ -2536,7 +2536,7 @@ var brothers = [
     "big": "Nick Shue",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
-    "bio": "Major: Music Education\nGrad Year: Fall 2027\nPositions Held: Treasurer",
+    "bio": "Major: Music Education\nGrad Year: Fall 2027\nPositions Held: Treasurer\nBio: N/A",
     "picture": "https://drive.google.com/file/d/1iefYskOCYz6Tue2V6Xk1l_vs1mW1D4_-/view?usp=drive_link",
     "shape": "box"
   },
@@ -2648,6 +2648,7 @@ var brothers = [
     "pledgeclass": "Fall 2025",
     "className": "Beta Kappa",
     "bio": "Major: History Education\nGrad Year: Spring 2028\nBio: #Chud",
+    "picture": "https://drive.google.com/file/d/1GIBWV09AydM1sGDk_k7RC6YsjArFuyFH/view?usp=drive_link",
     "shape": "box"
   },
   {
