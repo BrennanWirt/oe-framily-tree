@@ -1596,6 +1596,7 @@ var brothers = [
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
     "bio": "Major: Anthropology\nGrad Year: Spring 2026\nPositions Held: Secretary\nBio: Goblins will see you cast fireball and proclaim \"he cannot wield a blade.\"",
+    "picture": "https://drive.google.com/file/d/1yUbuXBzAwK_lGtdIiOsv7vDzy0hOac7h/view?usp=drive_link",
     "shape": "box"
   },
   {
