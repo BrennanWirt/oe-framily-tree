@@ -2562,7 +2562,7 @@ var brothers = [
     "big": "Carl White",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
-    "bio": "Major: Biology, Ecology and Evolution Concentration\nGrad Year: Spring 2027\n",
+    "bio": "Major: Biology, Ecology and Evolution Concentration\nGrad Year: Spring 2027\n\nBio: 🐟",
     "picture": "https://drive.google.com/file/d/1WUd-1yQc8-aUGzcWK-kZL8ayNLmIvxP7/view?usp=drive_link",
     "shape": "box"
   },
