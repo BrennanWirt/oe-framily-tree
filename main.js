@@ -463,6 +463,7 @@ function highlightClassMembers(pledgeClass) {
     edgesDataSet.update(edge);
   });
   network.selectNodes(memberIds);
+  network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
 }
 
 function highlightBigs(nodeId) {
@@ -596,7 +597,7 @@ function draw() {
     };
     network = new vis.Network(container, data, options);
 
-    network.once('afterDrawing', function () {
+    network.once('stabilized', function () {
       network.fit({ animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
     });
 
