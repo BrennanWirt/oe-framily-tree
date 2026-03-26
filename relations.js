@@ -978,7 +978,7 @@ var brothers = [
     "className": "Beta Theta",
     "graduated": true,
     "bio": "Major: Natural Resource Management and Biology\nGrad Year: Fall 2025\nPositions Held: Warden\nBio: Music is the Esperanza of the soul. All Hail. MNKB.",
-    "picture": "https://drive.google.com/file/d/10FHK6NjeD3tCdfIeY6_d_Q6aX8EzMb3B/view?usp=drive_link",
+    "picture": "https://drive.google.com/file/d/1t6N6PwuISH6JJVweHqgPA-JGSNkv0t_l/view?usp=drive_link",
     "shape": "box"
   },
   {
