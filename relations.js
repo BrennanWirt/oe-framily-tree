@@ -200,11 +200,6 @@ var brothers = [
     "shape": "box"
   },
   {
-    "name": "Scott McCloy",
-    "big": "Ezra Adams",
-    "pledgeclass": "Spring 1998",
-    "className": "Eta",
-    "graduated": true,
     "shape": "box"
   },
   {
@@ -1152,7 +1147,7 @@ var brothers = [
     "big": "Ash Ogata",
     "pledgeclass": "Spring 2023",
     "className": "Beta Zeta",
-    "bio": "Major: Computer Information Systems\nGrad Year: Spring 2026\nPositions Held: Historian, President\nBio: Hello! My name is Brennan, and I was the President for the 2025-2026 School Year, as well as the Historian that Created this Family Tree! If anything gos awry, please reach out to me at brennanwirt@gmail.com. SLIBFS! ",
+    "bio": "Major: Computer Information Systems\nGrad Year: Spring 2026\nPositions Held: Historian, President\nBio: Hello! My name is Brennan, and I was the President for the 2025-2026 School Year, as well as the Historian that Created this Family Tree! If anything goes awry, please reach out to me at brennanwirt@gmail.com. SLIBFS! ",
     "picture": "https://drive.google.com/file/d/13NN0xSaiPk8uDeuG7MaQfc1BIVI1q7Dv/view?usp=drive_link",
     "shape": "box"
   },
@@ -1600,6 +1595,7 @@ var brothers = [
     "big": "Luke Norton",
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
+    "bio": "Major: Anthropology\nGrad Year: Spring 2026\nBio: Goblins will see you cast fireball and proclaim \"he cannot wield a blade.\"",
     "shape": "box"
   },
   {
@@ -2255,7 +2251,6 @@ var brothers = [
     "className": "Lambda Sigma",
     "graduated": true,
     "familyStarted": "Transfer",
-    "bio": "START TRANSFER FAMILIES",
     "shape": "box"
   },
   {
@@ -2478,6 +2473,8 @@ var brothers = [
     "big": "Jason Puckett",
     "pledgeclass": "Spring 2023",
     "className": "Beta Zeta",
+    "bio": "Major: Mechanical Engineering\nGrad Year: Spring 2026\nBio: Firsbee, Saxophone, and cool guy extraordinaire",
+    "picture": "https://drive.google.com/file/d/1X6BBxcGhXN3alqXyCwzEndIYfaiVq_6w/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -2515,6 +2512,8 @@ var brothers = [
     "big": "Kyle Songy",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
+    "bio": "Major: Music Education\nGrad Year: Spring 2027",
+    "picture": "https://drive.google.com/file/d/1mJkGI2NZbPoxKPjfJWKefiuOyqXGJWvn/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -2537,6 +2536,8 @@ var brothers = [
     "big": "Nick Shue",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
+    "bio": "Major: Music Education\nGrad Year: Fall 2027\nPositions Held: Treasurer",
+    "picture": "https://drive.google.com/file/d/1iefYskOCYz6Tue2V6Xk1l_vs1mW1D4_-/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -2544,6 +2545,8 @@ var brothers = [
     "big": "Luke Norton",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
+    "bio": "Major: Commercial Music and Audio Production\nGrad Year: Spring 2028\nBio: I'm the biggest, the largest\n",
+    "picture": "https://drive.google.com/file/d/1I6TpmQo1ZA-YxPB40th_dbDWjycSYq96/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -2558,6 +2561,8 @@ var brothers = [
     "big": "Carl White",
     "pledgeclass": "Spring 2025",
     "className": "Beta Iota",
+    "bio": "Major: Biology, Ecology and Evolution Concentration\nGrad Year: Spring 2027\n",
+    "picture": "https://drive.google.com/file/d/1WUd-1yQc8-aUGzcWK-kZL8ayNLmIvxP7/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -2642,6 +2647,7 @@ var brothers = [
     "big": "Ashton Giles",
     "pledgeclass": "Fall 2025",
     "className": "Beta Kappa",
+    "bio": "Major: History Education\nGrad Year: Spring 2028\nBio: #Chud",
     "shape": "box"
   },
   {
@@ -2677,6 +2683,7 @@ var brothers = [
     "big": "John Crain",
     "pledgeclass": "Fall 2025",
     "className": "Beta Kappa",
+    "bio": "Major: Electrical and Computer Engineering Technology\nGrad Year: Spring 2026",
     "shape": "box"
   },
   {
@@ -2691,6 +2698,7 @@ var brothers = [
     "big": "Maxwell Arnold",
     "pledgeclass": "Fall 2025",
     "className": "Beta Kappa",
+    "bio": "Major: Music BA & Computer Information Systems\nGrad Year: 2029",
     "shape": "box"
   }
 ];
