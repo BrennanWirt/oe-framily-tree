@@ -365,6 +365,8 @@ var brothers = [
     "pledgeclass": "Spring 2021",
     "className": "Beta Beta",
     "graduated": true,
+    "bio": "Major: Music B.A.\nGrad Year: Spring 2025\nPositions Held: Warden, President, ARO",
+    "picture": "https://drive.google.com/file/d/1tn7mQZb-N7dkljBGTB6PuDHF_eGhEYVL/view?usp=drive_link",
     "shape": "box"
   },
   {
