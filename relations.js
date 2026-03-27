@@ -2445,7 +2445,7 @@ var brothers = [
     "pledgeclass": "Spring 2017",
     "className": "Alpha Tau",
     "graduated": true,
-    "bio": "Major: Political Science AND Communications with a concentration in Public Relations Grad Year: 2020 Positions Held: Warden, Secretary, President, CPR Bio: Go Cats!",
+    "bio": "Major: Political Science AND Communications with a concentration in Public Relations \nGrad Year: 2020 \nPositions Held: Warden, Secretary, President, CPR \nBio: Go Cats!",
     "shape": "box"
   },
   {
@@ -2509,6 +2509,8 @@ var brothers = [
     "pledgeclass": "Spring 2024",
     "className": "Beta Theta",
     "graduated": true,
+    "bio": "Major: Music\nGrad Year: Fall 2025\nPositions Held: Song Director\nBio: Piano",
+    "picture": "https://drive.google.com/file/d/1aQFbG9Ejg55R_1BdPByiIS4k0tlRyw-o/view?usp=drive_link",
     "shape": "box"
   },
   {

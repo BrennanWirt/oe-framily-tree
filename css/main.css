@@ -424,47 +424,97 @@ div.stretchy-wrapper {
 }
 
 @media (max-width: 520px) {
+  /* Thinner header */
   header {
-    padding: 10px 16px;
+    padding: 8px 14px;
   }
 
   header h1 {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 
+  /* Controls: drop "Color by:" label, let search fill remaining space */
   .controls {
-    padding: 8px 12px;
-    gap: 6px;
+    padding: 5px 10px;
+    gap: 5px;
+  }
+
+  .controls > label[for="layout"] {
+    display: none;
+  }
+
+  #layout {
+    font-size: 0.8rem;
+    padding: 5px 6px;
   }
 
   #searchbox {
-    width: 130px;
+    flex: 1;
+    min-width: 0;
+    width: auto;
+    font-size: 0.8rem;
+    padding: 5px 8px;
   }
 
-  /* Both panels become full-width bottom sheets on mobile */
+  #searchbutton {
+    font-size: 0.8rem;
+    padding: 5px 10px;
+  }
+
+  .active-filter-label {
+    font-size: 0.78rem;
+    width: 100%;
+    justify-content: center;
+    padding: 0;
+  }
+
+  /* Bottom sheet panels: shorter, tighter padding */
   .side-panel {
     width: 100%;
-    height: 50%;
+    height: 46%;
     top: auto;
     bottom: 0;
     right: 0;
+    padding: 12px 16px;
+    gap: 6px;
     transform: translateY(100%);
     border-radius: 16px 16px 0 0;
     box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.2);
-  }
-
-  #info-panel-photo {
-    width: auto;
-    max-width: 100%;
-    max-height: 100px;
-    object-fit: contain;
   }
 
   .side-panel.open {
     transform: translateY(0);
   }
 
-  /* Bigger touch targets for zoom buttons on mobile */
+  /* Compact photo */
+  #info-panel-photo {
+    width: auto;
+    max-width: 100%;
+    max-height: 80px;
+    object-fit: contain;
+    align-self: flex-start;
+  }
+
+  /* Tighter text in panels */
+  #info-panel-name,
+  #class-panel-name {
+    font-size: 1rem;
+  }
+
+  #info-panel-bio {
+    font-size: 0.8rem;
+    line-height: 1.4;
+  }
+
+  #info-panel-big-wrap,
+  #info-panel-littles-wrap,
+  #class-panel-prev-wrap,
+  #class-panel-next-wrap,
+  #class-panel-members-wrap {
+    padding-top: 6px;
+  }
+
+  /* Bigger touch targets for zoom buttons */
   .zoom-controls button {
     width: 44px;
     height: 44px;
