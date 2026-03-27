@@ -49,6 +49,16 @@ var KEYCODE_ENTER = 13;
 var pledgeClassColorGlobal = {};
 var branchColorGlobal = {};
 var currentInfoNodeId = null;
+var HONORARY_COLOR = { background: '#D4AF37', border: '#8B6914', highlight: { background: '#e8c84a', border: '#8B6914' } };
+var nodeByIdCache = null;
+
+function getNodeById() {
+  if (!nodeByIdCache) {
+    nodeByIdCache = {};
+    nodesGlobal.forEach(function (n) { nodeByIdCache[n.id] = n; });
+  }
+  return nodeByIdCache;
+}
 
 function ColorSpinner(colorObj, spinAmount) {
   this.spinAmount = spinAmount;
@@ -66,9 +76,19 @@ var getNewPledgeClassColor = (function () {
   };
 }());
 
+// Returns a map of nodeId → color. Does NOT call nodesDataSet.update.
 function assignBranchColors(nodes) {
   var branchColor = {};
   var visited = {};
+
+  // Build children map once — O(n) instead of O(n²) nested forEach
+  var childrenMap = {};
+  nodes.forEach(function (n) {
+    childrenMap[n.id] = [];
+  });
+  nodes.forEach(function (n) {
+    if (n.big) childrenMap[n.big.id].push(n);
+  });
 
   function getColorForBranch(branchId) {
     if (!branchColorGlobal[branchId]) {
@@ -78,30 +98,23 @@ function assignBranchColors(nodes) {
   }
 
   function dfs(node, color) {
-    if (visited[node.id]) return;
+    if (visited[node.id] || node.isHonorary) return;
     visited[node.id] = true;
     node.color = color;
     branchColor[node.id] = color;
-    nodesDataSet.update(node);
 
-    var hasLittles = false;
-    nodes.forEach(function (child) {
-      if (child.big && child.big.id === node.id) {
-        hasLittles = true;
-        dfs(child, color);
-      }
-    });
-
-    if (!hasLittles && !node.big) {
-      node.color = '#d3d3d3'; // Set to gray if no littles and no big
-      nodesDataSet.update(node);
+    var children = childrenMap[node.id] || [];
+    if (children.length === 0 && !node.big) {
+      node.color = '#d3d3d3'; // lone root with no littles
+      branchColor[node.id] = '#d3d3d3';
+    } else {
+      children.forEach(function (child) { dfs(child, color); });
     }
   }
 
   nodes.forEach(function (node) {
     if (!node.big) {
-      var branchColorValue = getColorForBranch(node.id);
-      dfs(node, branchColorValue);
+      dfs(node, getColorForBranch(node.id));
     }
   });
 
@@ -265,6 +278,7 @@ function createNodesHelper() {
 
   nodesDataSet = new vis.DataSet(nodesGlobal);
   edgesDataSet = new vis.DataSet(edgesGlobal);
+  nodeByIdCache = null; // will be built on first access
 }
 
 function findBrother(name, nodes, prevElem, direction) {
@@ -331,7 +345,7 @@ function normalizeImageUrl(url) {
 
 /* istanbul ignore next */
 function showInfoPanel(nodeId) {
-  var node = nodesGlobal.find(function (n) { return n.id === nodeId; });
+  var node = getNodeById()[nodeId];
   if (!node || node.isVirtual) return;
   highlightPersonFamily(nodeId);
 
@@ -522,8 +536,7 @@ function computeStats() {
   var largestClassCount = largestEntry ? largestEntry[1] : 0;
 
   // Longest lineage (deepest node from root)
-  var nodeById = {};
-  nodesGlobal.forEach(function (n) { nodeById[n.id] = n; });
+  var nodeById = getNodeById();
   var maxDepth = 0;
   var deepestNode = null;
   nodesGlobal.forEach(function (n) {
@@ -592,22 +605,28 @@ function highlightClassMembers(pledgeClass) {
     .filter(function (n) { return n.pledgeclass === pledgeClass; })
     .map(function (n) { return n.id; });
 
+  var memberSet = new Set(memberIds);
+  var nodeUpdates = [];
   nodesGlobal.forEach(function (node) {
-    if (node.isVirtual || node.isHonorary) return;
-    node.color = memberIds.includes(node.id) ? 'lightblue' : '#d3d3d3';
-    nodesDataSet.update(node);
+    if (node.isVirtual) return;
+    node.color = memberSet.has(node.id) ? 'lightblue' : '#d3d3d3';
+    nodeUpdates.push(node);
   });
+  nodesDataSet.update(nodeUpdates);
+
+  var edgeUpdates = [];
   edgesGlobal.forEach(function (edge) {
     if (edge.dashes) return;
     edge.color = { color: '#d3d3d3' };
-    edgesDataSet.update(edge);
+    edgeUpdates.push(edge);
   });
+  edgesDataSet.update(edgeUpdates);
   network.selectNodes(memberIds);
   network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
 }
 
 function highlightPersonFamily(nodeId) {
-  var node = nodesGlobal.find(function (n) { return n.id === nodeId; });
+  var node = getNodeById()[nodeId];
   if (!node) return;
 
   var highlightedNodes = [nodeId];
@@ -629,92 +648,108 @@ function highlightPersonFamily(nodeId) {
     }
   });
 
+  var highlightedSet = new Set(highlightedNodes);
+  var nodeUpdates = [];
   nodesGlobal.forEach(function (n) {
-    if (n.isVirtual || n.isHonorary) return;
-    n.color = highlightedNodes.includes(n.id) ? 'lightblue' : '#d3d3d3';
-    nodesDataSet.update(n);
+    if (n.isVirtual) return;
+    n.color = highlightedSet.has(n.id) ? 'lightblue' : '#d3d3d3';
+    nodeUpdates.push(n);
   });
+  nodesDataSet.update(nodeUpdates);
+
+  var edgeUpdates = [];
   edgesGlobal.forEach(function (e) {
     if (e.dashes) return;
     e.color = highlightedEdgeIds.has(e.id) ? { color: 'lightblue' } : { color: '#d3d3d3' };
-    edgesDataSet.update(e);
+    edgeUpdates.push(e);
   });
+  edgesDataSet.update(edgeUpdates);
 }
 
 function highlightBigs(nodeId) {
-  var currentNode = nodesGlobal.find(node => node.id === nodeId);
+  var nbi = getNodeById();
+  var currentNode = nbi[nodeId];
   var highlightedNodes = [];
   var highlightedEdges = [];
 
   while (currentNode && currentNode.big) {
     highlightedNodes.push(currentNode.id);
-    highlightedEdges.push(edgesGlobal.find(edge => edge.to === currentNode.id));
-    currentNode = nodesGlobal.find(node => node.id === currentNode.big.id);
+    highlightedEdges.push(edgesGlobal.find(function (edge) { return edge.to === currentNode.id; }));
+    currentNode = nbi[currentNode.big.id];
   }
 
   highlightedNodes.push(currentNode.id); // Add the top-most big
 
-  nodesGlobal.forEach(node => {
-    if (node.isVirtual || node.isHonorary) return;
-    node.color = highlightedNodes.includes(node.id) ? 'lightblue' : '#d3d3d3';
-    nodesDataSet.update(node);
+  var highlightedSet = new Set(highlightedNodes);
+  var highlightedEdgeSet = new Set(highlightedEdges);
+  var nodeUpdates = [];
+  nodesGlobal.forEach(function (node) {
+    if (node.isVirtual) return;
+    node.color = highlightedSet.has(node.id) ? 'lightblue' : '#d3d3d3';
+    nodeUpdates.push(node);
   });
+  nodesDataSet.update(nodeUpdates);
 
-  edgesGlobal.forEach(edge => {
+  var edgeUpdates = [];
+  edgesGlobal.forEach(function (edge) {
     if (edge.dashes) return;
-    edge.color = highlightedEdges.includes(edge) ? { color: 'lightblue' } : { color: '#d3d3d3' };
-    edgesDataSet.update(edge);
+    edge.color = highlightedEdgeSet.has(edge) ? { color: 'lightblue' } : { color: '#d3d3d3' };
+    edgeUpdates.push(edge);
   });
+  edgesDataSet.update(edgeUpdates);
 }
 
+// Returns a function that sets node.color but does NOT call nodesDataSet.update.
+// Callers are responsible for batching the DataSet update.
 function getNodeColorFn(colorMethod) {
   switch (colorMethod) {
     case 'pledgeClass':
       return function (node) {
-        if (node.isVirtual || node.isHonorary) return;
         node.color = node.pledgeclass
           ? pledgeClassColorGlobal[node.pledgeclass.toLowerCase()]
           : 'lightgrey';
-        nodesDataSet.update(node);
       };
     case 'highlightCollegiates':
       return function (node) {
-        if (node.isVirtual || node.isHonorary) return;
         node.color = node.graduated ? '#d3d3d3' : 'lightblue';
-        nodesDataSet.update(node);
       };
     case 'branches':
       var branchColors = assignBranchColors(nodesGlobal);
       return function (node) {
-        if (node.isVirtual || node.isHonorary) return;
         node.color = branchColors[node.id];
-        nodesDataSet.update(node);
       };
     default:
       return function (node) {
-        if (node.isVirtual || node.isHonorary) return;
         node.color = 'lightgrey';
-        nodesDataSet.update(node);
       };
   }
 }
 
 function resetColors() {
   var colorMethod = document.getElementById('layout').value;
-  nodesGlobal.forEach(getNodeColorFn(colorMethod));
-  edgesGlobal.forEach(edge => {
+  var colorFn = getNodeColorFn(colorMethod);
+  var nodeUpdates = [];
+  nodesGlobal.forEach(function (node) {
+    if (node.isVirtual) return;
+    node.color = node.isHonorary ? HONORARY_COLOR : (colorFn(node), node.color);
+    nodeUpdates.push(node);
+  });
+  nodesDataSet.update(nodeUpdates);
+
+  var edgeUpdates = [];
+  edgesGlobal.forEach(function (edge) {
     if (edge.dashes) return;
     edge.color = { color: 'lightgrey' };
-    edgesDataSet.update(edge);
+    edgeUpdates.push(edge);
   });
+  edgesDataSet.update(edgeUpdates);
 }
 
 function getActiveFamilyLineNodeIds() {
   var children = {};
-  var nodeById = {};
+  var nodeById = getNodeById();
   nodesGlobal.forEach(function (node) {
     children[node.id] = [];
-    nodeById[node.id] = node;
   });
   nodesGlobal.forEach(function (node) {
     if (node.big) children[node.big.id].push(node.id);
@@ -743,7 +778,14 @@ function draw() {
   createNodesHelper();
 
   var colorMethod = document.getElementById('layout').value;
-  nodesGlobal.forEach(getNodeColorFn(colorMethod));
+  var colorFn = getNodeColorFn(colorMethod);
+  var colorUpdates = [];
+  nodesGlobal.forEach(function (node) {
+    if (node.isVirtual) return;
+    node.color = node.isHonorary ? HONORARY_COLOR : (colorFn(node), node.color);
+    colorUpdates.push(node);
+  });
+  nodesDataSet.update(colorUpdates);
   if (!network) {
     // create a network
     var container = document.getElementById('mynetwork');
@@ -786,7 +828,7 @@ function draw() {
       var className = params.get('class');
       if (memberId) {
         var nodeId = parseInt(memberId, 10);
-        if (nodesGlobal.find(function (n) { return n.id === nodeId; })) {
+        if (getNodeById()[nodeId]) {
           showInfoPanel(nodeId);
           network.focus(nodeId, { scale: 0.9, animation: true });
           network.selectNodes([nodeId]);
@@ -798,7 +840,7 @@ function draw() {
 
     network.on('doubleClick', function (params) {
       if (params.nodes.length > 0) {
-        var n = nodesGlobal.find(function (n) { return n.id === params.nodes[0]; });
+        var n = getNodeById()[params.nodes[0]];
         if (n && !n.isVirtual) highlightBigs(params.nodes[0]);
       }
     });
@@ -808,7 +850,7 @@ function draw() {
         resetColors();
         closeInfoPanel();
       } else {
-        var n = nodesGlobal.find(function (n) { return n.id === params.nodes[0]; });
+        var n = getNodeById()[params.nodes[0]];
         if (n && !n.isVirtual) showInfoPanel(params.nodes[0]);
       }
     });
@@ -819,8 +861,7 @@ function draw() {
 
 /* istanbul ignore next */
 function applyLineageFilter(nodeId) {
-  var nodeById = {};
-  nodesGlobal.forEach(function (n) { nodeById[n.id] = n; });
+  var nodeById = getNodeById();
 
   var keep = new Set();
 
@@ -831,7 +872,7 @@ function applyLineageFilter(nodeId) {
     cur = cur.big ? nodeById[cur.big.id] : null;
   }
 
-  // Walk down all descendants (BFS)
+  // Walk down all descendants (BFS — index-based to avoid O(n²) queue.shift())
   var children = {};
   nodesGlobal.forEach(function (n) {
     if (n.big) {
@@ -840,14 +881,15 @@ function applyLineageFilter(nodeId) {
     }
   });
   var queue = [nodeId];
-  while (queue.length) {
-    var id = queue.shift();
+  var qi = 0;
+  while (qi < queue.length) {
+    var id = queue[qi++];
     keep.add(id);
     (children[id] || []).forEach(function (cid) { queue.push(cid); });
   }
 
   var removeSet = new Set(
-    nodesGlobal.filter(function (n) { return !keep.has(n.id) && !n.isVirtual; }).map(function (n) { return n.id; })
+    nodesGlobal.filter(function (n) { return !keep.has(n.id); }).map(function (n) { return n.id; })
   );
   lineageRemovedNodeIds = Array.from(removeSet);
   lineageRemovedEdgeData = edgesDataSet.get({ filter: function (e) { return removeSet.has(e.from) || removeSet.has(e.to); } });
@@ -862,7 +904,8 @@ function applyLineageFilter(nodeId) {
 
 /* istanbul ignore next */
 function removeLineageFilter() {
-  var nodesToRestore = nodesGlobal.filter(function (n) { return lineageRemovedNodeIds.includes(n.id); });
+  var restoreSet = new Set(lineageRemovedNodeIds);
+  var nodesToRestore = nodesGlobal.filter(function (n) { return restoreSet.has(n.id); });
   nodesDataSet.add(nodesToRestore);
   edgesDataSet.add(lineageRemovedEdgeData);
   lineageRemovedNodeIds = [];
@@ -880,8 +923,7 @@ function findConnection(nameA, nameB) {
   if (!nodeB) return { error: 'Could not find "' + nameB + '".' };
   if (nodeA.id === nodeB.id) return { error: 'That\'s the same person!' };
 
-  var nodeById = {};
-  nodesGlobal.forEach(function (n) { nodeById[n.id] = n; });
+  var nodeById = getNodeById();
 
   // Collect A's ancestors in order (A first, root last)
   var ancestorsA = [];
@@ -893,7 +935,7 @@ function findConnection(nameA, nameB) {
   var ancestorSetA = new Set(ancestorsA);
   cur = nodeB;
   while (cur && !ancestorSetA.has(cur.id)) { pathB.push(cur.id); cur = cur.big ? nodeById[cur.big.id] : null; }
-  if (!cur) return { error: 'No common ancestor found.' };
+  if (!cur) return { error: 'No common ancestor found.', nodeA: nodeA, nodeB: nodeB };
 
   var lca = cur;
   var pathA = ancestorsA.slice(0, ancestorsA.indexOf(lca.id));
@@ -958,7 +1000,8 @@ if (typeof document !== 'undefined') {
     }
 
     function removeActiveFilter() {
-      var nodesToRestore = nodesGlobal.filter(function (n) { return removedNodeIds.includes(n.id); });
+      var restoreSet = new Set(removedNodeIds);
+      var nodesToRestore = nodesGlobal.filter(function (n) { return restoreSet.has(n.id); });
       nodesDataSet.add(nodesToRestore);
       edgesDataSet.add(removedEdgeData);
       removedNodeIds = [];
@@ -1017,7 +1060,8 @@ if (typeof document !== 'undefined') {
       network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
     }
     function removeSoloFilter() {
-      var nodesToRestore = nodesGlobal.filter(function (n) { return removedSoloIds.includes(n.id); });
+      var restoreSet = new Set(removedSoloIds);
+      var nodesToRestore = nodesGlobal.filter(function (n) { return restoreSet.has(n.id); });
       nodesDataSet.add(nodesToRestore);
       removedSoloIds = [];
       network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
@@ -1144,8 +1188,9 @@ if (typeof document !== 'undefined') {
     // Lineage view
     document.getElementById('info-panel-lineage').onclick = function () {
       if (currentInfoNodeId == null) return;
+      var nodeId = currentInfoNodeId;
       closeInfoPanel();
-      applyLineageFilter(currentInfoNodeId);
+      applyLineageFilter(nodeId);
     };
     document.getElementById('lineage-exit').onclick = function () {
       removeLineageFilter();
@@ -1169,16 +1214,29 @@ if (typeof document !== 'undefined') {
       var el = document.getElementById('connection-result');
       if (result.error) {
         el.innerHTML = '<p style="color:#A51C30;margin:0">' + result.error + '</p>';
+        if (result.nodeA && result.nodeB) {
+          var errorHighlightSet = new Set([result.nodeA.id, result.nodeB.id]);
+          var errorUpdates = [];
+          nodesGlobal.forEach(function (n) {
+            if (n.isVirtual) return;
+            n.color = errorHighlightSet.has(n.id) ? 'lightblue' : '#d3d3d3';
+            errorUpdates.push(n);
+          });
+          nodesDataSet.update(errorUpdates);
+          network.selectNodes([result.nodeA.id, result.nodeB.id]);
+        }
         return;
       }
       // Highlight path on tree
       var pathNodes = result.pathA.concat([result.lca.id]).concat(result.pathB);
       var pathSet = new Set(pathNodes);
+      var connectionUpdates = [];
       nodesGlobal.forEach(function (n) {
-        if (n.isVirtual || n.isHonorary) return;
+        if (n.isVirtual) return;
         n.color = pathSet.has(n.id) ? 'lightblue' : '#d3d3d3';
-        nodesDataSet.update(n);
+        connectionUpdates.push(n);
       });
+      nodesDataSet.update(connectionUpdates);
       network.selectNodes(pathNodes);
 
       // Build path display: nodeA → ... → lca → ... → nodeB
@@ -1267,7 +1325,7 @@ if (typeof document !== 'undefined') {
 
       // Arrow navigation within the info panel
       if (!document.getElementById('info-panel').classList.contains('open') || currentInfoNodeId == null) return;
-      var curNode = nodesGlobal.find(function (n) { return n.id === currentInfoNodeId; });
+      var curNode = getNodeById()[currentInfoNodeId];
       if (!curNode) return;
 
       if (e.key === 'ArrowUp' && curNode.big) {
