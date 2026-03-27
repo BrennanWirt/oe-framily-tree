@@ -635,8 +635,8 @@ var brothers = [
   {
     "name": "Brian Porterfield",
     "big": "Brittain Nichols",
-    "pledgeclass": "Fall 2012",
-    "className": "Alpha Lambda",
+    "pledgeclass": "Fall 2014",
+    "className": "Alpha Xi",
     "graduated": true,
     "shape": "box"
   },
@@ -2721,6 +2721,102 @@ var brothers = [
     "pledgeclass": "Fall 2025",
     "className": "Beta Kappa",
     "bio": "Major: Music BA & Computer Information Systems\nGrad Year: 2029",
+    "shape": "box"
+  },
+  {
+    "name": "Will Peebles",
+    "pledgeclass": "Spring 1996",
+    "className": "Gamma",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "William Martin",
+    "pledgeclass": "Spring 2002",
+    "className": "Xi",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "John Bardo",
+    "pledgeclass": "Spring 1996",
+    "className": "Gamma",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Matthew Henley",
+    "pledgeclass": "Spring 2007",
+    "className": "Psi",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "William Talley",
+    "pledgeclass": "Fall 2013",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Johnathan Henson",
+    "pledgeclass": "Spring 2016",
+    "className": "Alpha Chi",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Michael Lanford",
+    "pledgeclass": "Spring 2008",
+    "className": "Alpha Beta",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "David Luginbuhl",
+    "pledgeclass": "Fall 2002",
+    "className": "Omicron",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Robert Kehrbeg",
+    "pledgeclass": "Fall 1997",
+    "className": "Zeta",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Pavel Wlosok",
+    "pledgeclass": "Spring 2005",
+    "className": "Tau",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Robert Buckner",
+    "pledgeclass": "Spring 2007",
+    "className": "Psi",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Tim Carenter",
+    "pledgeclass": "Fall 2013",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Eldred Spell",
+    "pledgeclass": "Spring 2011",
+    "className": "Alpha Theta",
+    "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Larry Black",
+    "pledgeclass": "Fall 2009",
+    "className": "Alpha Epsilon",
+    "familyStarted": "Honorary",
     "shape": "box"
   }
 ];

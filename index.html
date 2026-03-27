@@ -19,6 +19,7 @@
 <body>
 <header>
   <h1>Omicron Epsilon Family Tree</h1>
+  <button id="stats-button">Stats</button>
 </header>
 
 <div class="controls">
@@ -32,14 +33,33 @@
   <button id="searchbutton">Search</button>
   <button id="prevsearch" style="display: none"><i class="arrow up"></i></button>
   <button id="nextsearch" style="display: none"><i class="arrow down"></i></button>
-  <label class="active-filter-label">
-    <input type="checkbox" id="activeonly">
-    Active lines only
-  </label>
+  <div class="filters-dropdown">
+    <button id="filters-toggle">Filters ▾</button>
+    <div id="filters-menu">
+      <label class="active-filter-label">
+        <input type="checkbox" id="activeonly">
+        Active lines only
+      </label>
+      <label class="active-filter-label">
+        <input type="checkbox" id="hidesolos">
+        Hide founders without littles
+      </label>
+    </div>
+  </div>
+  <div class="tools-dropdown">
+    <button id="tools-toggle">Tools ▾</button>
+    <div id="tools-menu">
+      <button id="connection-button" class="tools-menu-item">Find Connection</button>
+    </div>
+  </div>
 </div>
 
 <div class="stretchy-wrapper">
   <div id="mynetwork"></div>
+  <div id="lineage-banner">
+    Lineage: <span id="lineage-banner-name"></span>
+    <button id="lineage-exit">✕ Exit</button>
+  </div>
   <div class="zoom-controls">
     <button id="zoom-in">+</button>
     <button id="zoom-out">−</button>
@@ -47,7 +67,17 @@
   </div>
 </div>
 
+<div id="stats-panel" class="side-panel">
+  <div class="panel-drag-handle"></div>
+  <div class="panel-nav">
+    <h2 class="stats-title">Tree Stats</h2>
+    <button id="stats-panel-close">&times;</button>
+  </div>
+  <div id="stats-content"></div>
+</div>
+
 <div id="class-panel" class="side-panel">
+  <div class="panel-drag-handle"></div>
   <div class="panel-nav">
     <button id="class-panel-back">← Back</button>
     <button id="class-panel-close">&times;</button>
@@ -69,6 +99,7 @@
 </div>
 
 <div id="info-panel" class="side-panel">
+  <div class="panel-drag-handle"></div>
   <button id="info-panel-close">&times;</button>
   <img id="info-panel-photo" alt="" referrerpolicy="no-referrer" />
   <h2 id="info-panel-name"></h2>
@@ -82,6 +113,20 @@
     <h3>Littles</h3>
     <ul id="info-panel-littles"></ul>
   </div>
+  <button id="info-panel-lineage">View Full Lineage</button>
+</div>
+
+<div id="connection-panel" class="side-panel">
+  <div class="panel-drag-handle"></div>
+  <div class="panel-nav">
+    <h2 class="stats-title">Find Connection</h2>
+    <button id="connection-panel-close">&times;</button>
+  </div>
+  <p class="connection-hint">Enter two names to find how they're related.</p>
+  <input type="text" id="connection-name-a" placeholder="First person…" class="connection-input">
+  <input type="text" id="connection-name-b" placeholder="Second person…" class="connection-input">
+  <button id="connection-search">Find</button>
+  <div id="connection-result"></div>
 </div>
 </body>
 </html>

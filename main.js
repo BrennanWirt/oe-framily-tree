@@ -48,6 +48,7 @@ var KEYCODE_ENTER = 13;
 
 var pledgeClassColorGlobal = {};
 var branchColorGlobal = {};
+var currentInfoNodeId = null;
 
 function ColorSpinner(colorObj, spinAmount) {
   this.spinAmount = spinAmount;
@@ -205,6 +206,49 @@ function createNodes(brothers_) {
     }
   });
 
+  // Honorary members: style gold, chain vertically in pledge class order
+  var honoraryMembers = nodes.filter(function (n) { return n.familyStarted === 'Honorary'; });
+  if (honoraryMembers.length > 0) {
+    honoraryMembers.forEach(function (n) {
+      n.isHonorary = true;
+      n.color = { background: '#D4AF37', border: '#8B6914', highlight: { background: '#e8c84a', border: '#8B6914' } };
+      n.font = { color: '#111111' };
+    });
+
+    var virtualId = brothers_.length;
+    var edgeStyle = { dashes: true, arrows: { to: false }, color: { color: '#D4AF37', opacity: 0.6 } };
+
+    nodes.push({
+      id: virtualId, isVirtual: true, name: null, big: null,
+      shape: 'ellipse', label: 'Honorary\nMembers',
+      color: { background: '#111111', border: '#D4AF37', highlight: { background: '#222222', border: '#D4AF37' } },
+      font: { color: '#D4AF37', size: 13, multi: false },
+    });
+
+    // Group by pledge class, sorted chronologically
+    var honoraryByClass = {};
+    honoraryMembers.forEach(function (n) {
+      var pc = n.pledgeclass || 'Unknown';
+      if (!honoraryByClass[pc]) honoraryByClass[pc] = [];
+      honoraryByClass[pc].push(n);
+    });
+    var sortedClasses = Object.keys(honoraryByClass).sort(function (a, b) {
+      return parsePledgeClass(a) - parsePledgeClass(b);
+    });
+
+    // Chain class groups vertically; within each class, all members share the same
+    // parent so vis.js renders them as siblings (side by side)
+    var prevChainId = virtualId;
+    sortedClasses.forEach(function (pc) {
+      var classMembers = honoraryByClass[pc];
+      classMembers.forEach(function (n) {
+        edges.push(Object.assign({ from: prevChainId, to: n.id }, edgeStyle));
+      });
+      // First member of this class anchors the chain to the next class
+      prevChainId = classMembers[0].id;
+    });
+  }
+
   return [nodes, edges, pledgeClassColor];
 }
 
@@ -288,7 +332,7 @@ function normalizeImageUrl(url) {
 /* istanbul ignore next */
 function showInfoPanel(nodeId) {
   var node = nodesGlobal.find(function (n) { return n.id === nodeId; });
-  if (!node) return;
+  if (!node || node.isVirtual) return;
   highlightPersonFamily(nodeId);
 
   // Photo
@@ -370,6 +414,8 @@ function showInfoPanel(nodeId) {
     littlesWrap.style.display = 'none';
   }
 
+  currentInfoNodeId = nodeId;
+  history.replaceState(null, '', '?member=' + nodeId);
   document.getElementById('info-panel').classList.add('open');
 }
 
@@ -377,6 +423,8 @@ function showInfoPanel(nodeId) {
 function closeInfoPanel() {
   document.getElementById('info-panel').classList.remove('open');
   closeClassPanel();
+  currentInfoNodeId = null;
+  history.replaceState(null, '', window.location.pathname);
 }
 
 function parsePledgeClass(str) {
@@ -440,6 +488,7 @@ function showClassPanel(pledgeClass) {
       membersEl.appendChild(li);
     });
 
+  history.replaceState(null, '', '?class=' + encodeURIComponent(pledgeClass));
   document.getElementById('class-panel').classList.add('open');
   highlightClassMembers(pledgeClass);
 }
@@ -447,6 +496,94 @@ function showClassPanel(pledgeClass) {
 /* istanbul ignore next */
 function closeClassPanel() {
   document.getElementById('class-panel').classList.remove('open');
+  if (document.getElementById('info-panel').classList.contains('open') && currentInfoNodeId != null) {
+    history.replaceState(null, '', '?member=' + currentInfoNodeId);
+  } else {
+    history.replaceState(null, '', window.location.pathname);
+  }
+}
+
+function computeStats() {
+  var realNodes = nodesGlobal.filter(function (n) { return !n.isVirtual; });
+  var total = realNodes.length;
+  var activeCount = realNodes.filter(function (n) { return !n.graduated && !n.isHonorary; }).length;
+
+  // Per-class counts (exclude virtual/honorary)
+  var classCounts = {};
+  realNodes.forEach(function (n) {
+    if (n.pledgeclass && !n.isHonorary) classCounts[n.pledgeclass] = (classCounts[n.pledgeclass] || 0) + 1;
+  });
+  var classEntries = Object.entries(classCounts);
+  var totalClasses = classEntries.length;
+  var avgClassSize = totalClasses ? (total / totalClasses).toFixed(1) : 0;
+  var largestEntry = classEntries.sort(function (a, b) { return b[1] - a[1]; })[0];
+  var largestClassPledge = largestEntry ? largestEntry[0] : null;
+  var largestClassNode = largestClassPledge ? nodesGlobal.find(function (n) { return n.pledgeclass === largestClassPledge; }) : null;
+  var largestClassCount = largestEntry ? largestEntry[1] : 0;
+
+  // Longest lineage (deepest node from root)
+  var nodeById = {};
+  nodesGlobal.forEach(function (n) { nodeById[n.id] = n; });
+  var maxDepth = 0;
+  var deepestNode = null;
+  nodesGlobal.forEach(function (n) {
+    var depth = 0, cur = n;
+    while (cur && cur.big) { depth++; cur = nodeById[cur.big.id]; }
+    if (depth > maxDepth) { maxDepth = depth; deepestNode = n; }
+  });
+
+  // Most common major
+  var majorCounts = {};
+  nodesGlobal.forEach(function (n) {
+    if (!n.bio) return;
+    var match = n.bio.match(/Major:\s*([^\n]+)/);
+    if (match) {
+      var major = match[1].trim();
+      majorCounts[major] = (majorCounts[major] || 0) + 1;
+    }
+  });
+  var topMajor = Object.entries(majorCounts).sort(function (a, b) { return b[1] - a[1]; })[0] || null;
+
+  return { total, activeCount, totalClasses, avgClassSize, largestClassNode, largestClassPledge, largestClassCount, maxDepth, deepestNode, topMajor };
+}
+
+/* istanbul ignore next */
+function showStatsPanel() {
+  var s = computeStats();
+  var el = document.getElementById('stats-content');
+  el.innerHTML = '';
+
+  function row(label, valueHtml) {
+    var div = document.createElement('div');
+    div.className = 'stat-item';
+    div.innerHTML = '<span class="stat-label">' + label + '</span><span class="stat-value">' + valueHtml + '</span>';
+    el.appendChild(div);
+  }
+
+  row('Total Members', s.total);
+  row('Active Members', s.activeCount);
+  row('Total Classes', s.totalClasses);
+  row('Avg Class Size', s.avgClassSize);
+  if (s.largestClassNode) {
+    row('Largest Class',
+      '<span class="class-link" data-pledge-class="' + s.largestClassPledge + '" style="cursor:pointer">' +
+      (s.largestClassNode.className || s.largestClassPledge) + '</span> (' + s.largestClassCount + ')');
+  }
+  if (s.topMajor) {
+    row('Most Common Major', s.topMajor[0] + ' (' + s.topMajor[1] + ')');
+  }
+  if (s.deepestNode) {
+    row('Longest Lineage',
+      '<span style="cursor:pointer;text-decoration:underline" data-node-id="' + s.deepestNode.id + '">' +
+      s.deepestNode.name + '</span> (' + s.maxDepth + ' generations)');
+  }
+
+  document.getElementById('stats-panel').classList.add('open');
+}
+
+/* istanbul ignore next */
+function closeStatsPanel() {
+  document.getElementById('stats-panel').classList.remove('open');
 }
 
 /* istanbul ignore next */
@@ -456,10 +593,12 @@ function highlightClassMembers(pledgeClass) {
     .map(function (n) { return n.id; });
 
   nodesGlobal.forEach(function (node) {
+    if (node.isVirtual || node.isHonorary) return;
     node.color = memberIds.includes(node.id) ? 'lightblue' : '#d3d3d3';
     nodesDataSet.update(node);
   });
   edgesGlobal.forEach(function (edge) {
+    if (edge.dashes) return;
     edge.color = { color: '#d3d3d3' };
     edgesDataSet.update(edge);
   });
@@ -474,10 +613,10 @@ function highlightPersonFamily(nodeId) {
   var highlightedNodes = [nodeId];
   var highlightedEdgeIds = new Set();
 
-  // Add big
+  // Add big (skip if connected via honorary virtual root)
   if (node.big) {
     highlightedNodes.push(node.big.id);
-    var bigEdge = edgesGlobal.find(function (e) { return e.to === nodeId; });
+    var bigEdge = edgesGlobal.find(function (e) { return e.to === nodeId && !e.dashes; });
     if (bigEdge) highlightedEdgeIds.add(bigEdge.id);
   }
 
@@ -485,16 +624,18 @@ function highlightPersonFamily(nodeId) {
   nodesGlobal.forEach(function (n) {
     if (n.big && n.big.id === nodeId) {
       highlightedNodes.push(n.id);
-      var littleEdge = edgesGlobal.find(function (e) { return e.to === n.id; });
+      var littleEdge = edgesGlobal.find(function (e) { return e.to === n.id && !e.dashes; });
       if (littleEdge) highlightedEdgeIds.add(littleEdge.id);
     }
   });
 
   nodesGlobal.forEach(function (n) {
+    if (n.isVirtual || n.isHonorary) return;
     n.color = highlightedNodes.includes(n.id) ? 'lightblue' : '#d3d3d3';
     nodesDataSet.update(n);
   });
   edgesGlobal.forEach(function (e) {
+    if (e.dashes) return;
     e.color = highlightedEdgeIds.has(e.id) ? { color: 'lightblue' } : { color: '#d3d3d3' };
     edgesDataSet.update(e);
   });
@@ -514,11 +655,13 @@ function highlightBigs(nodeId) {
   highlightedNodes.push(currentNode.id); // Add the top-most big
 
   nodesGlobal.forEach(node => {
+    if (node.isVirtual || node.isHonorary) return;
     node.color = highlightedNodes.includes(node.id) ? 'lightblue' : '#d3d3d3';
     nodesDataSet.update(node);
   });
 
   edgesGlobal.forEach(edge => {
+    if (edge.dashes) return;
     edge.color = highlightedEdges.includes(edge) ? { color: 'lightblue' } : { color: '#d3d3d3' };
     edgesDataSet.update(edge);
   });
@@ -528,6 +671,7 @@ function getNodeColorFn(colorMethod) {
   switch (colorMethod) {
     case 'pledgeClass':
       return function (node) {
+        if (node.isVirtual || node.isHonorary) return;
         node.color = node.pledgeclass
           ? pledgeClassColorGlobal[node.pledgeclass.toLowerCase()]
           : 'lightgrey';
@@ -535,17 +679,20 @@ function getNodeColorFn(colorMethod) {
       };
     case 'highlightCollegiates':
       return function (node) {
+        if (node.isVirtual || node.isHonorary) return;
         node.color = node.graduated ? '#d3d3d3' : 'lightblue';
         nodesDataSet.update(node);
       };
     case 'branches':
       var branchColors = assignBranchColors(nodesGlobal);
       return function (node) {
+        if (node.isVirtual || node.isHonorary) return;
         node.color = branchColors[node.id];
         nodesDataSet.update(node);
       };
     default:
       return function (node) {
+        if (node.isVirtual || node.isHonorary) return;
         node.color = 'lightgrey';
         nodesDataSet.update(node);
       };
@@ -556,6 +703,7 @@ function resetColors() {
   var colorMethod = document.getElementById('layout').value;
   nodesGlobal.forEach(getNodeColorFn(colorMethod));
   edgesGlobal.forEach(edge => {
+    if (edge.dashes) return;
     edge.color = { color: 'lightgrey' };
     edgesDataSet.update(edge);
   });
@@ -633,11 +781,25 @@ function draw() {
 
     network.once('stabilized', function () {
       network.fit({ animation: { duration: 500, easingFunction: 'easeInOutQuad' } });
+      var params = new URLSearchParams(window.location.search);
+      var memberId = params.get('member');
+      var className = params.get('class');
+      if (memberId) {
+        var nodeId = parseInt(memberId, 10);
+        if (nodesGlobal.find(function (n) { return n.id === nodeId; })) {
+          showInfoPanel(nodeId);
+          network.focus(nodeId, { scale: 0.9, animation: true });
+          network.selectNodes([nodeId]);
+        }
+      } else if (className) {
+        showClassPanel(decodeURIComponent(className));
+      }
     });
 
     network.on('doubleClick', function (params) {
       if (params.nodes.length > 0) {
-        highlightBigs(params.nodes[0]);
+        var n = nodesGlobal.find(function (n) { return n.id === params.nodes[0]; });
+        if (n && !n.isVirtual) highlightBigs(params.nodes[0]);
       }
     });
 
@@ -646,7 +808,8 @@ function draw() {
         resetColors();
         closeInfoPanel();
       } else {
-        showInfoPanel(params.nodes[0]);
+        var n = nodesGlobal.find(function (n) { return n.id === params.nodes[0]; });
+        if (n && !n.isVirtual) showInfoPanel(params.nodes[0]);
       }
     });
   } else {
@@ -655,10 +818,124 @@ function draw() {
 }
 
 /* istanbul ignore next */
+function applyLineageFilter(nodeId) {
+  var nodeById = {};
+  nodesGlobal.forEach(function (n) { nodeById[n.id] = n; });
+
+  var keep = new Set();
+
+  // Walk up ancestor chain
+  var cur = nodeById[nodeId];
+  while (cur) {
+    keep.add(cur.id);
+    cur = cur.big ? nodeById[cur.big.id] : null;
+  }
+
+  // Walk down all descendants (BFS)
+  var children = {};
+  nodesGlobal.forEach(function (n) {
+    if (n.big) {
+      if (!children[n.big.id]) children[n.big.id] = [];
+      children[n.big.id].push(n.id);
+    }
+  });
+  var queue = [nodeId];
+  while (queue.length) {
+    var id = queue.shift();
+    keep.add(id);
+    (children[id] || []).forEach(function (cid) { queue.push(cid); });
+  }
+
+  var removeSet = new Set(
+    nodesGlobal.filter(function (n) { return !keep.has(n.id) && !n.isVirtual; }).map(function (n) { return n.id; })
+  );
+  lineageRemovedNodeIds = Array.from(removeSet);
+  lineageRemovedEdgeData = edgesDataSet.get({ filter: function (e) { return removeSet.has(e.from) || removeSet.has(e.to); } });
+
+  nodesDataSet.remove(lineageRemovedNodeIds);
+  edgesDataSet.remove(lineageRemovedEdgeData.map(function (e) { return e.id; }));
+  network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
+
+  document.getElementById('lineage-banner-name').textContent = nodeById[nodeId].name;
+  document.getElementById('lineage-banner').classList.add('active');
+}
+
+/* istanbul ignore next */
+function removeLineageFilter() {
+  var nodesToRestore = nodesGlobal.filter(function (n) { return lineageRemovedNodeIds.includes(n.id); });
+  nodesDataSet.add(nodesToRestore);
+  edgesDataSet.add(lineageRemovedEdgeData);
+  lineageRemovedNodeIds = [];
+  lineageRemovedEdgeData = [];
+  resetColors();
+  network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
+  document.getElementById('lineage-banner').classList.remove('active');
+}
+
+/* istanbul ignore next */
+function findConnection(nameA, nameB) {
+  var nodeA = nodesGlobal.find(function (n) { return n.name && n.name.toLowerCase().includes(nameA.toLowerCase()); });
+  var nodeB = nodesGlobal.find(function (n) { return n.name && n.name.toLowerCase().includes(nameB.toLowerCase()); });
+  if (!nodeA) return { error: 'Could not find "' + nameA + '".' };
+  if (!nodeB) return { error: 'Could not find "' + nameB + '".' };
+  if (nodeA.id === nodeB.id) return { error: 'That\'s the same person!' };
+
+  var nodeById = {};
+  nodesGlobal.forEach(function (n) { nodeById[n.id] = n; });
+
+  // Collect A's ancestors in order (A first, root last)
+  var ancestorsA = [];
+  var cur = nodeA;
+  while (cur) { ancestorsA.push(cur.id); cur = cur.big ? nodeById[cur.big.id] : null; }
+
+  // Walk B's chain until hitting an ancestor of A
+  var pathB = [];
+  var ancestorSetA = new Set(ancestorsA);
+  cur = nodeB;
+  while (cur && !ancestorSetA.has(cur.id)) { pathB.push(cur.id); cur = cur.big ? nodeById[cur.big.id] : null; }
+  if (!cur) return { error: 'No common ancestor found.' };
+
+  var lca = cur;
+  var pathA = ancestorsA.slice(0, ancestorsA.indexOf(lca.id));
+
+  return { nodeA: nodeA, nodeB: nodeB, lca: lca, pathA: pathA, pathB: pathB, nodeById: nodeById };
+}
+
+/* istanbul ignore next */
+function describeConnection(result) {
+  var da = result.pathA.length, db = result.pathB.length;
+  var a = result.nodeA.name.split(' ')[0], b = result.nodeB.name.split(' ')[0];
+
+  function bigTitle(n) {
+    if (n === 0) return '';
+    if (n === 1) return 'grand-';
+    return 'great-'.repeat(n - 1) + 'grand-';
+  }
+
+  if (da === 0 && db > 0) return b + ' is ' + a + '\'s ' + bigTitle(db - 1) + 'little.';
+  if (db === 0 && da > 0) return a + ' is ' + b + '\'s ' + bigTitle(da - 1) + 'little.';
+  if (da === 1 && db === 1) return a + ' and ' + b + ' are line brothers — same big (' + result.lca.name + ').';
+  if (da === 1 && db === 2) return b + ' is ' + a + '\'s nephew/niece in the line (one generation apart through ' + result.lca.name + ').';
+  if (da === 2 && db === 1) return a + ' is ' + b + '\'s nephew/niece in the line (one generation apart through ' + result.lca.name + ').';
+  var cousins = Math.min(da, db) - 1;
+  var removed = Math.abs(da - db);
+  var label = cousins === 1 ? 'cousins' : (cousins === 2 ? 'second cousins' : 'cousins (' + cousins + 'x)');
+  if (removed > 0) label += ' ' + removed + 'x removed';
+  return a + ' and ' + b + ' are ' + label + ' through ' + result.lca.name + '.';
+}
+
+var lineageRemovedNodeIds = [];
+var lineageRemovedEdgeData = [];
+
+/* istanbul ignore next */
 // This section is intended to only run in the browser, it does not run in
 // nodejs.
 if (typeof document !== 'undefined') {
   $(document).ready(function () {
+    // Reset checkboxes on load so filters don't appear active without being applied
+    document.getElementById('activeonly').checked = false;
+    document.getElementById('hidesolos').checked = false;
+
     // Start the first draw
     draw();
 
@@ -700,11 +977,56 @@ if (typeof document !== 'undefined') {
       }
     };
 
+    var filtersMenu = document.getElementById('filters-menu');
+    var toolsMenu = document.getElementById('tools-menu');
+
+    document.getElementById('filters-toggle').onclick = function (e) {
+      e.stopPropagation();
+      filtersMenu.classList.toggle('open');
+      toolsMenu.classList.remove('open');
+    };
+    document.getElementById('tools-toggle').onclick = function (e) {
+      e.stopPropagation();
+      toolsMenu.classList.toggle('open');
+      filtersMenu.classList.remove('open');
+    };
+    document.addEventListener('click', function () {
+      filtersMenu.classList.remove('open');
+      toolsMenu.classList.remove('open');
+    });
+    filtersMenu.addEventListener('click', function (e) { e.stopPropagation(); });
+    toolsMenu.addEventListener('click', function (e) { e.stopPropagation(); });
+
     document.getElementById('activeonly').onchange = function () {
       if (this.checked) {
         applyActiveFilter();
       } else {
         removeActiveFilter();
+        resetColors();
+      }
+    };
+
+    var removedSoloIds = [];
+    function applySoloFilter() {
+      var hasLittles = new Set();
+      nodesGlobal.forEach(function (n) { if (n.big) hasLittles.add(n.big.id); });
+      removedSoloIds = nodesGlobal
+        .filter(function (n) { return !n.big && !n.isVirtual && !n.isHonorary && !hasLittles.has(n.id); })
+        .map(function (n) { return n.id; });
+      nodesDataSet.remove(removedSoloIds);
+      network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
+    }
+    function removeSoloFilter() {
+      var nodesToRestore = nodesGlobal.filter(function (n) { return removedSoloIds.includes(n.id); });
+      nodesDataSet.add(nodesToRestore);
+      removedSoloIds = [];
+      network.fit({ animation: { duration: 400, easingFunction: 'easeInOutQuad' } });
+    }
+    document.getElementById('hidesolos').onchange = function () {
+      if (this.checked) {
+        applySoloFilter();
+      } else {
+        removeSoloFilter();
         resetColors();
       }
     };
@@ -812,6 +1134,154 @@ if (typeof document !== 'undefined') {
       if (nodesDataSet.get(nodeId)) {
         network.focus(nodeId, { scale: 0.9, animation: true });
         network.selectNodes([nodeId]);
+      }
+    });
+
+    // Stats panel
+    document.getElementById('stats-button').onclick = showStatsPanel;
+    document.getElementById('stats-panel-close').onclick = closeStatsPanel;
+
+    // Lineage view
+    document.getElementById('info-panel-lineage').onclick = function () {
+      if (currentInfoNodeId == null) return;
+      closeInfoPanel();
+      applyLineageFilter(currentInfoNodeId);
+    };
+    document.getElementById('lineage-exit').onclick = function () {
+      removeLineageFilter();
+    };
+
+    // Connection finder
+    function openConnectionPanel() {
+      document.getElementById('connection-panel').classList.add('open');
+    }
+    function closeConnectionPanel() {
+      document.getElementById('connection-panel').classList.remove('open');
+      document.getElementById('connection-result').innerHTML = '';
+      document.getElementById('connection-name-a').value = '';
+      document.getElementById('connection-name-b').value = '';
+    }
+    function runConnectionSearch() {
+      var nameA = document.getElementById('connection-name-a').value.trim();
+      var nameB = document.getElementById('connection-name-b').value.trim();
+      if (!nameA || !nameB) return;
+      var result = findConnection(nameA, nameB);
+      var el = document.getElementById('connection-result');
+      if (result.error) {
+        el.innerHTML = '<p style="color:#A51C30;margin:0">' + result.error + '</p>';
+        return;
+      }
+      // Highlight path on tree
+      var pathNodes = result.pathA.concat([result.lca.id]).concat(result.pathB);
+      var pathSet = new Set(pathNodes);
+      nodesGlobal.forEach(function (n) {
+        if (n.isVirtual || n.isHonorary) return;
+        n.color = pathSet.has(n.id) ? 'lightblue' : '#d3d3d3';
+        nodesDataSet.update(n);
+      });
+      network.selectNodes(pathNodes);
+
+      // Build path display: nodeA → ... → lca → ... → nodeB
+      // pathA = [nodeA.id, nodeA's big, ..., lca's child on A's side]
+      // pathB = [nodeB.id, nodeB's big, ..., lca's child on B's side]
+      var displayPath = result.pathA.concat([result.lca.id]).concat(result.pathB.slice().reverse());
+
+      var html = '<p style="margin:0 0 8px">' + describeConnection(result) + '</p>';
+      html += '<div class="connection-path">';
+      displayPath.forEach(function (id, i) {
+        var n = result.nodeById[id];
+        html += '<span class="connection-path-node" data-node-id="' + id + '">' + n.name + '</span>';
+        if (i < displayPath.length - 1) html += '<span class="connection-path-arrow">→</span>';
+      });
+      html += '</div>';
+      el.innerHTML = html;
+    }
+    document.getElementById('connection-button').onclick = openConnectionPanel;
+    document.getElementById('connection-panel-close').onclick = closeConnectionPanel;
+    document.getElementById('connection-search').onclick = runConnectionSearch;
+    document.getElementById('connection-name-b').addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') runConnectionSearch();
+    });
+    document.getElementById('connection-panel').addEventListener('click', function (e) {
+      var target = e.target.closest('[data-node-id]');
+      if (!target) return;
+      var nodeId = parseInt(target.dataset.nodeId, 10);
+      closeConnectionPanel();
+      showInfoPanel(nodeId);
+      if (nodesDataSet.get(nodeId)) { network.focus(nodeId, { scale: 0.9, animation: true }); network.selectNodes([nodeId]); }
+    });
+    addSwipeToClose(document.getElementById('connection-panel'), closeConnectionPanel);
+    document.getElementById('stats-panel').addEventListener('click', function (e) {
+      var classTarget = e.target.closest('[data-pledge-class]');
+      if (classTarget) { closeStatsPanel(); showClassPanel(classTarget.dataset.pledgeClass); return; }
+      var nodeTarget = e.target.closest('[data-node-id]');
+      if (nodeTarget) {
+        var nodeId = parseInt(nodeTarget.dataset.nodeId, 10);
+        closeStatsPanel();
+        showInfoPanel(nodeId);
+        if (nodesDataSet.get(nodeId)) {
+          network.focus(nodeId, { scale: 0.9, animation: true });
+          network.selectNodes([nodeId]);
+        }
+      }
+    });
+
+    // Swipe down to close bottom panels on mobile
+    function addSwipeToClose(panelEl, closeFn) {
+      var startY = 0;
+      panelEl.addEventListener('touchstart', function (e) {
+        startY = e.touches[0].clientY;
+      }, { passive: true });
+      panelEl.addEventListener('touchend', function (e) {
+        var deltaY = e.changedTouches[0].clientY - startY;
+        if (deltaY > 60 && panelEl.scrollTop === 0) closeFn();
+      }, { passive: true });
+    }
+    addSwipeToClose(document.getElementById('info-panel'), function () { closeInfoPanel(); resetColors(); });
+    addSwipeToClose(document.getElementById('class-panel'), closeClassPanel);
+    addSwipeToClose(document.getElementById('stats-panel'), closeStatsPanel);
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', function (e) {
+      var tag = document.activeElement.tagName.toLowerCase();
+      var isInput = tag === 'input' || tag === 'textarea' || tag === 'select';
+
+      if (e.key === 'Escape') {
+        if (document.getElementById('class-panel').classList.contains('open')) {
+          closeClassPanel();
+        } else if (document.getElementById('info-panel').classList.contains('open')) {
+          closeInfoPanel(); resetColors();
+        } else if (document.getElementById('stats-panel').classList.contains('open')) {
+          closeStatsPanel();
+        }
+        return;
+      }
+
+      if (isInput) return;
+
+      if (e.key === '/') {
+        e.preventDefault();
+        document.getElementById('searchbox').focus();
+        return;
+      }
+
+      // Arrow navigation within the info panel
+      if (!document.getElementById('info-panel').classList.contains('open') || currentInfoNodeId == null) return;
+      var curNode = nodesGlobal.find(function (n) { return n.id === currentInfoNodeId; });
+      if (!curNode) return;
+
+      if (e.key === 'ArrowUp' && curNode.big) {
+        e.preventDefault();
+        var bigId = curNode.big.id;
+        showInfoPanel(bigId);
+        if (nodesDataSet.get(bigId)) { network.focus(bigId, { scale: 0.9, animation: true }); network.selectNodes([bigId]); }
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        var firstLittle = nodesGlobal.find(function (n) { return n.big && n.big.id === currentInfoNodeId; });
+        if (firstLittle) {
+          showInfoPanel(firstLittle.id);
+          if (nodesDataSet.get(firstLittle.id)) { network.focus(firstLittle.id, { scale: 0.9, animation: true }); network.selectNodes([firstLittle.id]); }
+        }
       }
     });
 
