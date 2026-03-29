@@ -556,10 +556,11 @@ button:hover {
 
 #info-panel-photo {
   width: 100%;
-  max-height: 220px;
-  object-fit: cover;
+  max-height: 400px;
+  object-fit: contain;
   border-radius: 8px;
   border: 2px solid #d4d9e3;
+  background: #f5f6fa;
 }
 
 #info-panel-name {
