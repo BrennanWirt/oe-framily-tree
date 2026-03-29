@@ -446,6 +446,7 @@ var brothers = [
     "pledgeclass": "Fall 2010",
     "className": "Alpha Eta",
     "graduated": true,
+    "bio": "Major: Music Education\nGrad Year: 2013\nPositions Held: Secretary, Assistant Music Director",
     "shape": "box"
   },
   {
@@ -1418,6 +1419,7 @@ var brothers = [
     "className": "Beta Zeta",
     "graduated": true,
     "bio": "Major: Music Education\nGrad Year: Fall 2025\nPositions Held: Public Relations Committee Head\nBio: Sean Ohmann became a Sinfonian in Spring 2023 as a part of the Beta Zeta class. In his time with the brotherhood he served as the Public Relations Committee Head and restarted the \"Brother of the Week\" social media series; highlighting graduating brothers', their accomplishments, and their lasting impacts on their brothers. He graduated in December 2025 with a bachelor’s degree in music education and a concentration in Instrumental Music and Saxophone, studying with Dr. Margaret Underwood and Dr. Ian Jeffress. \n\nSean has performed internationally as a member of the WASBE Youth Wind Orchestra in Gwangju, South Korea, and served as principal saxophonist in the Wind Ensemble from 2022 to 2025. He was also a founding member and ensemble coordinator for The Fraction Quartet. Under his leadership, The Fraction Quartet was selected to perform twice at the U.S. Navy International Saxophone Symposium in Fairfax, Virginia.\n\nBeyond performance, Sean is a brother also a brother of Kappa Kappa Psi and a member of NAFME, NCBA, and the NBA. His passion for teaching is grounded in a philosophy of developing caring, responsible, and hard-working student leaders. He strives to empower his students to create and perform music they enjoy while becoming thoughtful colleagues, critical thinkers, and dedicated stewards of music.\n\nOutside of music, Sean is an avid photographer, hiker, and lover of cats. You can connect with Sean on Instagram (@Boring_Sean) or on Facebook.",
+    "picture": "https://drive.google.com/file/d/1P5cv8MdyWxQVZ5aGuWbdCfNlX0XroTIP/view?usp=drive_link",
     "shape": "box"
   },
   {
@@ -2028,7 +2030,7 @@ var brothers = [
     "name": "Matthew (Logan) Deitz",
     "big": "Russell Gaskey",
     "pledgeclass": "Spring 2006",
-    "className": "Pi",
+    "className": "Phi",
     "graduated": true,
     "shape": "box"
   },
@@ -2817,6 +2819,46 @@ var brothers = [
     "pledgeclass": "Fall 2009",
     "className": "Alpha Epsilon",
     "familyStarted": "Honorary",
+    "shape": "box"
+  },
+  {
+    "name": "Logan Rogers",
+    "big": "Adam Stewart",
+    "pledgeclass": "Fall 2007",
+    "className": "Omega",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Joshua Dickens",
+    "big": "Logan Rogers",
+    "pledgeclass": "Fall 2009",
+    "className": "Alpha Epsilon",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Logan Cartwright",
+    "big": "Joshua Dickens",
+    "pledgeclass": "Spring 2011",
+    "className": "Alpha Theta",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Ward Wilson",
+    "big": "Logan Cartwright",
+    "pledgeclass": "Fall 2012",
+    "className": "Alpha Lambda",
+    "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Malik Adams",
+    "big": "Ward Wilson",
+    "pledgeclass": "Spring 2014",
+    "className": "Alpha Nu",
+    "graduated": true,
     "shape": "box"
   }
 ];
