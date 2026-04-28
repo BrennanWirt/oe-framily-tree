@@ -2877,14 +2877,14 @@ var brothers = [
   },
   {
     "name": "Lawson Eaves",
-    "big": "Braedan Merwin",
+    "big": "Aidan Moore",
     "pledgeclass": "Spring 2026",
     "className": "Beta Lambda",
     "shape": "box"
   },
   {
     "name": "Josh Gaydon",
-    "big": "Aidan Moore",
+    "big": "Braedan Merwin",
     "pledgeclass": "Spring 2026",
     "className": "Beta Lambda",
     "shape": "box"
