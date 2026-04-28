@@ -2822,7 +2822,7 @@ var brothers = [
     "shape": "box"
   },
   {
-    "name": "Logan Rogers",
+    "name": "Logan Rodgers",
     "big": "Adam Stewart",
     "pledgeclass": "Fall 2007",
     "className": "Omega",
@@ -2831,7 +2831,7 @@ var brothers = [
   },
   {
     "name": "Joshua Dickens",
-    "big": "Logan Rogers",
+    "big": "Logan Rodgers",
     "pledgeclass": "Fall 2009",
     "className": "Alpha Epsilon",
     "graduated": true,
@@ -2859,6 +2859,41 @@ var brothers = [
     "pledgeclass": "Spring 2014",
     "className": "Alpha Nu",
     "graduated": true,
+    "shape": "box"
+  },
+  {
+    "name": "Galen \"Ty\" Adams",
+    "big": "Logan Lemire",
+    "pledgeclass": "Spring 2026",
+    "className": "Beta Lambda",
+    "shape": "box"
+  },
+  {
+    "name": "Cooper Burns",
+    "big": "Jerry Bradley",
+    "pledgeclass": "Spring 2026",
+    "className": "Beta Lambda",
+    "shape": "box"
+  },
+  {
+    "name": "Lawson Eaves",
+    "big": "Braedan Merwin",
+    "pledgeclass": "Spring 2026",
+    "className": "Beta Lambda",
+    "shape": "box"
+  },
+  {
+    "name": "Josh Gaydon",
+    "big": "Aidan Moore",
+    "pledgeclass": "Spring 2026",
+    "className": "Beta Lambda",
+    "shape": "box"
+  },
+  {
+    "name": "Dominique \"Dom\" Robinson",
+    "big": "Jackson White",
+    "pledgeclass": "Spring 2026",
+    "className": "Beta Lambda",
     "shape": "box"
   }
 ];
